@@ -13,7 +13,7 @@ from django.conf import settings
 
 from django.shortcuts import redirect, get_object_or_404, reverse, Http404
 
-from .models import Author
+from .models import Profile
 
 def index(request):
     return render(request, 'index.html')
@@ -25,11 +25,16 @@ def register(request):
             # send email verification now
             activation_key = helpers.generate_activation_key(username=request.POST['username'])
 
-            subject = "TheGreatDjangoBlog Account Verification"
+            subject = "Cucumber Sports Account Verification"
 
-            message = '''\n
-Please visit the following link to verify your account \n\n{0}://{1}/cadmin/activate/account/?key={2}
-                        '''.format(request.scheme, request.get_host(), activation_key)            
+#             message = '''\n
+# Please visit the following link to verify your account \n\n{0}://{1}/cadmin/activate/account/?key={2}
+#                         '''.format(request.scheme, request.get_host(), activation_key)            
+
+            message = (
+                f'Please visit the following link to verify your account:\n'
+                f'{request.scheme}://{request.get_host()}/activate/{activation_key}'
+            )
 
             error = False
 
@@ -49,10 +54,10 @@ Please visit the following link to verify your account \n\n{0}://{1}/cadmin/acti
                         is_active = 0
                 )
 
-                author = Author()
-                author.activation_key = activation_key
-                author.user = u
-                author.save()
+                profile = Profile()
+                profile.activation_key = activation_key
+                profile.user = u
+                profile.save()
 
             return redirect('register')
 
@@ -62,12 +67,12 @@ Please visit the following link to verify your account \n\n{0}://{1}/cadmin/acti
 
     return render(request, 'cadmin/register.html', {'form': f})
 
-def activate_account(request):
-    key = request.GET['key']
-    if not key:
+def activate_account(request, activation_key):
+    # key = request.GET['key']
+    if not activation_key:
         raise Http404()
 
-    r = get_object_or_404(Author, activation_key=key, email_validated=False)
+    r = get_object_or_404(Profile, activation_key=activation_key, email_validated=False)
     r.user.is_active = True
     r.user.save()
     r.email_validated = True
