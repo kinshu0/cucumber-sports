@@ -11,5 +11,10 @@ class Profile(models.Model):
     activation_key = models.CharField(max_length=255, default=1)
     email_validated = models.BooleanField(default=False)
 
+    first_name = models.CharField(max_length=50, default='')
+    last_name = models.CharField(max_length=50, default='')
+    # first_name = models.CharField(max_length=50)
+    # last_name = models.CharField(max_length=50)
+
     def __str__(self):
         return self.user.username

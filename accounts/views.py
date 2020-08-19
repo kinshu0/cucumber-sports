@@ -15,6 +15,9 @@ from django.shortcuts import redirect, get_object_or_404, reverse, Http404
 
 from .models import Profile
 
+from django.template.loader import get_template
+# from django.template import Context
+
 def index(request):
     return render(request, 'index.html')
 
@@ -25,16 +28,17 @@ def register(request):
             # send email verification now
             activation_key = helpers.generate_activation_key(username=request.POST['username'])
 
-            subject = "Cucumber Sports Account Verification"
-
-#             message = '''\n
-# Please visit the following link to verify your account \n\n{0}://{1}/cadmin/activate/account/?key={2}
-#                         '''.format(request.scheme, request.get_host(), activation_key)            
+            subject = "Cucumber Sports Account Verification"    
+            verification_link = f'{request.scheme}://{request.get_host()}/activate/{activation_key}'
 
             message = (
-                f'Please visit the following link to verify your account:\n'
-                f'{request.scheme}://{request.get_host()}/activate/{activation_key}'
+                f'Hello {request.POST["first_name"]},\nPlease visit the following link to verify your account:\n'
+                f'{verification_link}'
             )
+            
+            # message = get_template('verification_email.html').render({
+            #     'verification_link': verification_link
+            # })
 
             error = False
 
@@ -57,6 +61,10 @@ def register(request):
                 profile = Profile()
                 profile.activation_key = activation_key
                 profile.user = u
+
+                profile.first_name = request.POST['first_name']
+                profile.last_name = request.POST['last_name']
+
                 profile.save()
 
             return redirect('register')
@@ -65,7 +73,7 @@ def register(request):
     else:
         f = CustomUserCreationForm()
 
-    return render(request, 'cadmin/register.html', {'form': f})
+    return render(request, 'register.html', {'form': f})
 
 def activate_account(request, activation_key):
     # key = request.GET['key']
@@ -78,4 +86,4 @@ def activate_account(request, activation_key):
     r.email_validated = True
     r.save()
 
-    return render(request, 'cadmin/activated.html')
+    return render(request, 'activated.html')
