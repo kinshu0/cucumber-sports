@@ -1,0 +1,26 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+<form method="POST" action="/login/">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Log In</legend>
+        <label for="username">Username: </label>
+        <input style="margin-left: 6px;" name="username" id="username" type="text">
+        <br><br>
+        <label for="password">Password: </label>
+        <input style="margin-left: 10px;" name="password" id="password" type="password">
+
+    </fieldset>
+    <br>
+    <div class="form-group">
+        <button class="btn btn-success" type="submit">Login</button>
+    </div>
+</form>
+<div class="border-top pt-3">
+
+    Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+
+</div>
+
+{% endblock content %}

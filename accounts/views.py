@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 # Create your views here.
 from django.contrib import messages
 # from django.contrib.auth.forms import UserCreationForm
@@ -11,16 +9,25 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from django.shortcuts import redirect, get_object_or_404, reverse, Http404
+from django.shortcuts import redirect, get_object_or_404, reverse, Http404, render
 
 from .models import Profile
 
 from django.template.loader import get_template
-# from django.template import Context
 
+
+from django.contrib.auth import authenticate, login
+
+'''
+Home Page
+'''
 def index(request):
     return render(request, 'index.html')
 
+
+'''
+Registration Page
+'''
 def register(request):
     if request.method == 'POST':
         f = CustomUserCreationForm(request.POST)
@@ -75,6 +82,10 @@ def register(request):
 
     return render(request, 'register.html', {'form': f})
 
+
+'''
+Email verification
+'''
 def activate_account(request, activation_key):
     # key = request.GET['key']
     if not activation_key:
@@ -87,3 +98,41 @@ def activate_account(request, activation_key):
     r.save()
 
     return render(request, 'activated.html')
+
+
+'''
+Login Page
+'''
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+
+            u = Profile.objects.get(user=user)
+            # u = CustomUser.objects.get(username=username)
+            # btcBalance = getBtcBalance(u.btcKey)
+
+            ## Set session variables    
+            request.session['first_name'] = u.first_name
+            # request.session['username'] = u.username
+            # request.session['btcAddress'] = u.btcAddress
+            # request.session['balance'] = btcBalance
+            # request.session['apiKey'] = u.apiKey
+            # request.session['conversionRate'] = getBtcPrice()
+            # qrBinary = u.qrCodeBinary
+            # request.session['qrCodeBinary'] = json.dumps(qrBinary.decode("utf-8"))
+
+            # ## Find, update and payout games that are not up to date
+            # oddsApiParse.findUpcomingGames()
+            # oddsApiParse.checkForCompletedGames()
+            # oddsApiParse.payoutCompletedGames()
+            
+            return redirect('admin/')
+        else:
+            return render(request, 'accounts/login.html', {'message': 'Invalid Login'})
+
+    else:
+        return render(request, 'accounts/login.html')
