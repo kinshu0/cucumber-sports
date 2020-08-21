@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'accounts',
+    'events',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,7 +56,10 @@ ROOT_URLCONF = 'cucumber.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['accounts/templates/accounts'],
+        'DIRS': [
+            'accounts/templates/accounts',
+            'events/templates/events'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

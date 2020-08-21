@@ -1,0 +1,10 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    {% for event in upcoming_events %}
+        <li>{{ event.name }}</li>
+    {% endfor %}
+
+{% endblock %}
