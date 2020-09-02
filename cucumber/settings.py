@@ -57,8 +57,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'accounts/templates/accounts',
-            'events/templates/events'
+            'cucumber/templates',
+            # 'accounts/templates/accounts',
+            # 'events/templates/events'
         ],
         'APP_DIRS': True,
         'OPTIONS': {

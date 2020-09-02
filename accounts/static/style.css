@@ -1,0 +1,12 @@
+.search-box {
+    border-radius: 0;
+}
+
+.event-cards {
+    border-radius: 0pt;
+}
+
+.date-badge {
+    background-color: #ff0066;
+    font-size: 0.6rem;
+}
