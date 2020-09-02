@@ -1,78 +1,71 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Events</title>
-        <!-- Bootstrap core CSS -->
-        <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
-        <!-- Custom styles for this template -->
-        <link href="{% static 'style.css' %}" rel="stylesheet">
-        <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet" type="text/css">
-        <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
-    </head>
-    <body style="background-color: #eeeeee;">
-        <div class="container p-4">
-            <div class="row">
-                <h4>Events</h4>
-            </div>
-            <div class="d-flex d-md-flex justify-content-md-center mt-2 row">
-                <input type="text" class="border-left-0 border-top-0 col-8 col-md-6 form-control search-box" placeholder="Search">
-                <div class="col-4 col-md-2 dropdown show">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="border-radius: 0px;">Type&nbsp;</button>
-                    <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="dropdownMenuButton" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-start">
-                        <div class="custom-control custom-checkbox"> 
-                            <input type="checkbox" class="custom-control-input" id="formCustomCheckbox282"> 
-                            <label class="custom-control-label" for="formCustomCheckbox282">Run</label>
-                        </div>
-                        <div class="custom-control custom-checkbox"> 
-                            <input type="checkbox" class="custom-control-input" id="formCustomCheckbox308"> 
-                            <label class="custom-control-label" for="formCustomCheckbox308">Tennis</label>                             
-                        </div>
-                        <div class="custom-control custom-checkbox"> 
-                            <input type="checkbox" class="custom-control-input" id="formCustomCheckbox302"> 
-                            <label class="custom-control-label" for="formCustomCheckbox302">Golf</label>                             
-                        </div>
-                    </div>                     
-                </div>
-            </div>
-        </div>
-        <div class="d-flex flex-row flex-wrap justify-content-center p-1 w-100">
 
-            <!--This is each event-->
-            {% for event in upcoming_events %}
-                <div class="card col-12 col-lg-3 col-md-5 col-sm-5 event-cards m-2"> 
-                    <img class="card-img-top" src="http://pinegrow.com/placeholders/img12.jpg" alt="Card image cap">
-                    <div class="card-img-overlay p-0">
-                        <div class="align-items-center col-2 d-flex date-badge flex-column p-2 p-lg-2 text-white">
-                            <div class="row">{{ event.when | date:'M' }}</div>
-                            <div class="row" style="font-size: 1rem;">{{ event.when | date:'j' }}</div>
-                            <div class="row">{{ event.when | date:'D'}}</div>
-                        </div>
-                    </div>                 
-                    <div class="card-body d-flex flex-column"> 
-                        <h4 class="card-title">{{ event.name }}</h4> 
-                        <p class="card-text">Status: <i>Active</i><br>@ Rocky Hill High School</p>
-                        <div class="d-flex justify-content-around mb-2 row">
-                            <button type="button" class="btn btn-info col-5">Details</button>
-                            <button type="button" class="btn btn-dark col-5">Register</button>
-                        </div>
-                        <small>Minimum $5 Buy-in</small> 
-                    </div>                 
-                </div>
-            {% endfor %}
+{% block styles %}
+<link href="{% static 'kin.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<body style="background-color: #eeeeee;">
+    <div class="container p-4">
+        <div class="row">
+            <h4>Events</h4>
         </div>
-        <div class="container mt-3 p-sm-0">
-</div>
-        <!-- Bootstrap core JavaScript
-    ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-        <script src="{% static 'assets/js/popper.js' %}"></script>
-        <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-    </body>
-</html>
+        <div class="d-flex d-md-flex justify-content-md-center mt-2 row">
+            <input type="text" class="border-left-0 border-top-0 col-8 col-md-6 form-control search-box"
+                placeholder="Search">
+            <div class="col-4 col-md-2 dropdown show">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                    style="border-radius: 0px;">Type&nbsp;</button>
+                <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="dropdownMenuButton"
+                    style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;"
+                    x-placement="bottom-start">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="formCustomCheckbox282">
+                        <label class="custom-control-label" for="formCustomCheckbox282">Run</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="formCustomCheckbox308">
+                        <label class="custom-control-label" for="formCustomCheckbox308">Tennis</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="formCustomCheckbox302">
+                        <label class="custom-control-label" for="formCustomCheckbox302">Golf</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-row flex-wrap justify-content-center p-1 w-100">
+
+        <!--This is each event-->
+        {% for event in upcoming_events %}
+        <div class="card col-12 col-lg-3 col-md-5 col-sm-5 event-cards m-2">
+            <img class="card-img-top"
+                src="https://images.pexels.com/photos/1068989/pexels-photo-1068989.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                alt="Card image cap">
+            <div class="card-img-overlay p-0">
+                <div class="align-items-center col-2 d-flex date-badge flex-column p-2 p-lg-2 text-white">
+                    <div class="row">{{ event.when | date:'M' }}</div>
+                    <div class="row" style="font-size: 1rem;">{{ event.when | date:'j' }}</div>
+                    <div class="row">{{ event.when | date:'D'}}</div>
+                </div>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h4 class="card-title">{{ event.name }}</h4>
+                <p class="card-text">Status: <i>Active</i><br>@ Rocky Hill High School</p>
+                <div class="d-flex justify-content-around mb-2 row">
+                    <button type="button" class="btn btn-info col-5">Details</button>
+                    <button type="button" class="btn btn-dark col-5">Register</button>
+                </div>
+                <small>Minimum $5 Buy-in</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container mt-3 p-sm-0">
+    </div>
+</body>
+{% endblock %}
