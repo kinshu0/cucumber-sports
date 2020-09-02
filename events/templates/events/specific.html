@@ -1,99 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Blank Template for Bootstrap</title>
-        <!-- Bootstrap core CSS -->
-        <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-        <!-- Custom styles for this template -->
-        <link href="style.css" rel="stylesheet">
-        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
-        <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        <div class="w-100">
-            <div id="carousel2" class="carousel slide" data-ride="carousel" style="font-family: &quot;Open Sans&quot;, sans-serif;"> 
-                <div class="carousel-inner"> 
-                    <div class="carousel-item active"> 
-                        <img class="d-block w-100" src="assets/img/smokescreen.jpg" alt="First slide"> 
-                        <div class="align-content-center align-items-center card-img-overlay d-flex flex-column justify-content-center"> 
-                            <h2 class="font-italic font-weight-bold text-white-50">Mile Track Classic</h2> 
-                        </div>
-                    </div>                     
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<body>
+
+    <div class="w-100">
+        <div id="carousel2" class="carousel slide" data-ride="carousel"
+            style="font-family: &quot;Open Sans&quot;, sans-serif;">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="{% static 'assets/img/smokescreen.jpg' %}" alt="First slide">
+                    <div
+                        class="align-content-center align-items-center card-img-overlay d-flex flex-column justify-content-center">
+                        <h2 class="font-italic font-weight-bold text-white-50">{{ event.name }}</h2>
+                    </div>
                 </div>
-                <ol class="carousel-indicators d-none d-sm-flex"> 
-                    <li data-target="#carousel2" data-slide-to="0" class="active"></li>                     
-                    <li data-target="#carousel2" data-slide-to="1"></li>                     
-                    <li data-target="#carousel2" data-slide-to="2"></li>                     
-                </ol>                 
-                <a class="carousel-control-prev d-md-flex d-none" href="#carousel2" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> 
-                <a class="carousel-control-next d-md-flex d-none" href="#carousel2" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> 
             </div>
+            <ol class="carousel-indicators d-none d-sm-flex">
+                <li data-target="#carousel2" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel2" data-slide-to="1"></li>
+                <li data-target="#carousel2" data-slide-to="2"></li>
+            </ol>
+            <a class="carousel-control-prev d-md-flex d-none" href="#carousel2" role="button" data-slide="prev"> <span
+                    class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next d-md-flex d-none" href="#carousel2" role="button" data-slide="next"> <span
+                    class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
         </div>
-        <main id="main" style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #212529; text-align: left; background-color: #fff;">
-            <!-- ======= About Section ======= -->
-            <section id="money" class="about p-4">
-                <div class="container p-3" data-aos="fade-up">
-                    <div class="row">
-                        <div class="col-lg-6 pt-3 pt-lg-0 content">
-                            <h3>Purse</h3>
-                            <p>Collective Pool: $100</p>
-                            <p>Prize Stakes:</p>
-                            <ul>
-                                <li>
-                                    <i class="bx bx-check-double"></i> 1st Place: $50 (50%)
-                                </li>
-                                <li>
-                                    <i class="bx bx-check-double"></i> 2nd Place: $30 (30%)
-                                </li>
-                                <li>
-                                    <i class="bx bx-check-double"></i> 3rd Place: $20 (20%)
-                                </li>
-                            </ul>
-                        </div>
+    </div>
+
+    <main id="main"
+        style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #212529; text-align: left; background-color: #fff;">
+
+        <section id="money" class="about p-4">
+            <div class="container p-3" data-aos="fade-up">
+                <div class="row">
+                    <div class="col-lg-6 pt-3 pt-lg-0 content">
+                        <h3>Purse</h3>
+                        <p>Collective Pool: $100</p>
+                        <p>Prize Stakes:</p>
+                        <ul>
+                            <li>
+                                <i class="bx bx-check-double"></i> 1st Place: $50 (50%)
+                            </li>
+                            <li>
+                                <i class="bx bx-check-double"></i> 2nd Place: $30 (30%)
+                            </li>
+                            <li>
+                                <i class="bx bx-check-double"></i> 3rd Place: $20 (20%)
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </section>
-            <section id="money" class="about p-4">
-                <div class="container p-3" data-aos="fade-up">
-                    <div class="row">
-                        <div class="col-lg-6 pt-3 pt-lg-0 content">
-                            <h3>Time and Location</h3>
-                            <p>6:00 PM EST @ Track of Rocky Hill High School</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <div class="d-flex justify-content-around mb-5 row w-100">
-                <button type="button" class="btn btn-dark col-10">REGISTER</button>
             </div>
-            <!-- End About Section -->
-            <!-- ======= About Boxes Section ======= -->
-            <!-- End About Boxes Section -->
-            <!-- ======= Clients Section ======= -->
-            <!-- End Clients Section -->
-            <!-- ======= Features Section ======= -->
-            <!-- End Features Section -->
-            <!-- ======= Services Section ======= -->
-            <!-- End Services Section -->
-            <!-- ======= Testimonials Section ======= -->
-            <!-- End Testimonials Section -->
-            <!-- ======= Portfolio Section ======= -->
-            <!-- End Portfolio Section -->
-            <!-- ======= Team Section ======= -->
-            <!-- End Team Section -->
-            <!-- ======= Contact Section ======= -->
-            <!-- End Contact Section -->
-        </main>
-        <!-- Bootstrap core JavaScript
-    ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/popper.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-    </body>
-</html>
+        </section>
+
+        <section id="time-and-location" class="about p-4">
+            <div class="container p-3" data-aos="fade-up">
+                <div class="row">
+                    <div class="col-lg-6 pt-3 pt-lg-0 content">
+                        <h3>Time and Location</h3>
+                        <p>{{ event.when }} @ Track of Rocky Hill High School</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="d-flex justify-content-around mb-5 row w-100">
+            <button type="button" class="btn btn-dark col-10">REGISTER</button>
+        </div>
+
+    </main>
+
+</body>
+{% endblock %}

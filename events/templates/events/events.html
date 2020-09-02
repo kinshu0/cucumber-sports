@@ -57,8 +57,10 @@
                 <h4 class="card-title">{{ event.name }}</h4>
                 <p class="card-text">Status: <i>Active</i><br>@ Rocky Hill High School</p>
                 <div class="d-flex justify-content-around mb-2 row">
-                    <button type="button" class="btn btn-info col-5">Details</button>
-                    <button type="button" class="btn btn-dark col-5">Register</button>
+                    <a class="btn btn-info col-5" href="{% url 'specific-event' event.id %}">Details</a>
+                    <a class="btn btn-dark col-5 text-white" href="">Register</a>
+                    <!-- <button type="button" class="btn btn-info col-5" onclick="window.location.href='google.com';">Details</button>
+                    <button type="button" class="btn btn-dark col-5">Register</button> -->
                 </div>
                 <small>Minimum $5 Buy-in</small>
             </div>

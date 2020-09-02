@@ -31,14 +31,14 @@
             <div class="container-fluid d-flex align-items-center justify-content-between">
 
                 
-                <a href="index.html" class="col-5 col-md-1 col-md-2 col-sm-3 logo"><img src="{% static 'assets/img/brand/logo-text-dark.png' %}" alt="" class="img-fluid"></a>
+                <a href="" class="col-5 col-md-1 col-md-2 col-sm-3 logo"><img src="{% static 'assets/img/brand/logo-text-dark.png' %}" alt="" class="img-fluid"></a>
                 <nav class="d-lg-block d-none nav-menu">
                     <ul>
                         <li class="active">
-                            <a href="index.html">Home</a>
+                            <a href="{% url 'home' %}">Home</a>
                         </li>
                         <li>
-                            <a href="events.html">Events</a>
+                            <a href="{% url 'events' %}">Events</a>
                         </li>
                         <li>
                             <a href="#about">About</a>
