@@ -13,3 +13,4 @@ from . import models
 
 # admin.site.register(models.Profile, ProfileAdmin)
 admin.site.register(models.Profile)
+admin.site.register(models.Registration)

@@ -11,7 +11,7 @@ from django.conf import settings
 
 from django.shortcuts import redirect, get_object_or_404, reverse, Http404, render
 
-from .models import Profile
+from .models import Profile, Registration
 
 from django.template.loader import get_template
 
@@ -80,7 +80,7 @@ def register(request):
     else:
         f = CustomUserCreationForm()
 
-    return render(request, 'register.html', {'form': f})
+    return render(request, 'accounts/register.html', {'form': f})
 
 
 '''
@@ -136,3 +136,10 @@ def login_view(request):
 
     else:
         return render(request, 'accounts/login.html')
+
+
+def profile(request):
+    profile = Profile.objects.get(user=request.user)
+    context = {'registrations': Registration.objects.filter(profile=profile)}
+
+    return render(request, 'accounts/profile.html', context)

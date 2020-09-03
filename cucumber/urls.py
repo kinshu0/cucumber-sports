@@ -27,5 +27,5 @@ urlpatterns = [
     
     path('', home, name='home'),
     path('events/', include('events.urls')),
-    # path('', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
