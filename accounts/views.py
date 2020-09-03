@@ -18,6 +18,8 @@ from django.template.loader import get_template
 
 from django.contrib.auth import authenticate, login
 
+from django.contrib.auth.decorators import login_required
+
 '''
 Home Page
 '''
@@ -104,6 +106,10 @@ def activate_account(request, activation_key):
 Login Page
 '''
 def login_view(request):
+    # if request.method == 'GET':
+    #     if request.GET['next'] and request.user.is_authenticated:
+    #         return redirect(request.GET['next'])
+        
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -130,14 +136,16 @@ def login_view(request):
             # oddsApiParse.checkForCompletedGames()
             # oddsApiParse.payoutCompletedGames()
             
-            return redirect('admin/')
+            # return redirect('admin/')
+            return redirect(request.POST.get('next'))
+            # return redirect(request.POST.get('next', '/accounts/profile'))
         else:
             return render(request, 'accounts/login.html', {'message': 'Invalid Login'})
 
     else:
         return render(request, 'accounts/login.html')
 
-
+@login_required
 def profile(request):
     profile = Profile.objects.get(user=request.user)
     context = {'registrations': Registration.objects.filter(profile=profile)}
