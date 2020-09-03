@@ -58,7 +58,7 @@
                 <p class="card-text">Status: <i>Active</i><br>@ Rocky Hill High School</p>
                 <div class="d-flex justify-content-around mb-2 row">
                     <a class="btn btn-info col-5" href="{% url 'specific-event' event.id %}">Details</a>
-                    <a class="btn btn-dark col-5 text-white" href="">Register</a>
+                    <a class="btn btn-dark col-5 text-white" href="{% url 'specific-event-register' event.id %}">Register</a>
                     <!-- <button type="button" class="btn btn-info col-5" onclick="window.location.href='google.com';">Details</button>
                     <button type="button" class="btn btn-dark col-5">Register</button> -->
                 </div>
