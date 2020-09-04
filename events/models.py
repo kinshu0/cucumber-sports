@@ -8,7 +8,17 @@ class Event(models.Model):
     when = models.DateTimeField()
     # location = models.ForeignKey(Location, on_delete=models.DO_NOTHING)
     # mode = models.ForeignKey(Mode, on_delete=models.DO_NOTHING)
-    finished = models.BooleanField()
+    status = [
+        ('U', 'Upcoming'),
+        ('P', 'In Progress'),
+        ('F', 'Finished'),
+
+        ('C', 'Cancelled'),
+        ('L', 'Postponed'),
+        ('E', 'Preponed'),
+    ]
+
+# class SportMode(models.Model):
 
 # class Mode(models.Model):
 #     name = models.CharField()

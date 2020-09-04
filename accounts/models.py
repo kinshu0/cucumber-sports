@@ -27,3 +27,12 @@ class Registration(models.Model):
 
     created_when = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+
+    '''
+    Result could be time or any number through which to order results,
+    For instance: 1, 2, 3 for place which would be ascending
+    or time: 4:23, 4:30, 4:33 where the ascending order would still create the same position
+    '''
+    # bru = models.
+    # result = models.IntegerField(null=True)
+    result = models.JSONField()

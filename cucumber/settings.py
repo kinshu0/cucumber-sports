@@ -81,10 +81,23 @@ WSGI_APPLICATION = 'cucumber.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fwfwqgey',
+        'USER': 'fwfwqgey',
+        'PASSWORD': '2pcF1xYY0npDcGnZc4mUfv42EH0FcwBC',
+        'HOST': 'lallah.db.elephantsql.com',
+        'PORT': '5432',
     }
 }
+'''
+sqlite current DB
+'''
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
