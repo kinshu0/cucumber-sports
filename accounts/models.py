@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 from events.models import Event
 
+from django.core.serializers.json import DjangoJSONEncoder
+
 class Profile(models.Model):        
     # required to associate Author model with User model (Important)
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
@@ -35,4 +37,4 @@ class Registration(models.Model):
     '''
     # bru = models.
     # result = models.IntegerField(null=True)
-    result = models.JSONField()
+    result = models.JSONField(encoder=DjangoJSONEncoder, null=True)

@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'cucumber.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fwfwqgey',
-        'USER': 'fwfwqgey',
-        'PASSWORD': '2pcF1xYY0npDcGnZc4mUfv42EH0FcwBC',
-        'HOST': 'lallah.db.elephantsql.com',
+        'NAME': 'cucumber-dev',
+        'USER': 'postgres',
+        'PASSWORD': 'a1b1c1d1',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
