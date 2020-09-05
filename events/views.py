@@ -1,9 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Event
 from accounts.models import Registration, Profile
 
 from django.contrib.auth.decorators import login_required
+
+from .forms import EventCreation
 
 # Create your views here.
 def index_view(request):
@@ -28,3 +30,13 @@ def event_register(request, event_id):
     )
     registration.save()
     return render(request, 'events/successful.html')
+
+def create_event(request):
+    if request.method == 'POST':
+        f = EventCreation(request.POST)
+        if f.is_valid():
+            f.save()
+            return redirect('events')
+    else:
+        f = EventCreation()
+    return render(request, 'events/create.html', {'form': f})

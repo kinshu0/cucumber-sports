@@ -89,7 +89,6 @@ def register(request):
 Email verification
 '''
 def activate_account(request, activation_key):
-    # key = request.GET['key']
     if not activation_key:
         raise Http404()
 
@@ -106,10 +105,6 @@ def activate_account(request, activation_key):
 Login Page
 '''
 def login_view(request):
-    # if request.method == 'GET':
-    #     if request.GET['next'] and request.user.is_authenticated:
-    #         return redirect(request.GET['next'])
-        
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']

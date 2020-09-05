@@ -8,15 +8,17 @@ class Event(models.Model):
     when = models.DateTimeField()
     # location = models.ForeignKey(Location, on_delete=models.DO_NOTHING)
     # mode = models.ForeignKey(Mode, on_delete=models.DO_NOTHING)
-    status = [
-        ('U', 'Upcoming'),
-        ('P', 'In Progress'),
-        ('F', 'Finished'),
 
-        ('C', 'Cancelled'),
-        ('L', 'Postponed'),
-        ('E', 'Preponed'),
-    ]
+    class Status(models.IntegerChoices):
+        UPCOMING = 1
+        IN_PROGRESS = 0
+        ENDED = -1
+
+        CANCELLED = -3
+        POSTPONED = 2
+        PREPONED = -2
+
+    status = models.IntegerField(choices=Status.choices, default=Status.UPCOMING, blank=True)
 
 # class SportMode(models.Model):
 
