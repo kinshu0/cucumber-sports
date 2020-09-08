@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        {% for registration in registrations %}
+            <ul>
+                <li>{{ registration.event.name }}</li>
+            </ul>
+        {% endfor %}
+    </body>
+</html>

@@ -7,9 +7,6 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import EventCreation, TrackResult
 
-result_forms = {
-    'TrackResult': TrackResult,
-}
 
 # Create your views here.
 def index_view(request):
@@ -45,13 +42,40 @@ def create_event(request):
         f = EventCreation()
     return render(request, 'events/create.html', {'form': f})
 
+
+def TrackResultEval(POST):
+    event_result = {}
+    individual_result = {
+        'primary': {
+            'Time': POST['time'],
+            'Competed': POST['participated']
+            # 'Position': '''other function that will get position from event result data'''
+        },
+        'extra': {
+            'Splits': '64, 65, 63, 60',
+        }
+    }
+    return event_result, individual_result
+
+result_forms = {
+    'TrackResult': (TrackResult, TrackResultEval),
+}
+
+@login_required
 def add_result(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    mode = event.sport_mode
+    
     if request.method == 'POST':
-        pass
+        result_func = result_forms[mode.which_form][1]
+        event_result, individual_result = result_func(request.POST)
+
+        registration = Registration.objects.get(event=event, profile=Profile.objects.get(user=request.user))
+        registration.result = individual_result
+        registration.save()
+
     else:
-        event = get_object_or_404(Event, id=event_id)
-        mode = event.sport_mode
-        f = result_forms[mode.which_form]()
+        f = result_forms[mode.which_form][0]()
     return render(request, 'events/add-result.html', {'form': f})
 
 # def event_result(request):

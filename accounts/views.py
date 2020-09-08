@@ -143,6 +143,8 @@ def login_view(request):
 @login_required
 def profile(request):
     profile = Profile.objects.get(user=request.user)
-    context = {'registrations': Registration.objects.filter(profile=profile)}
+    context = {
+        'registrations': Registration.objects.filter(profile=profile),
+    }
 
     return render(request, 'accounts/profile.html', context)

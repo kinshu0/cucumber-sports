@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        {% for registration in registrations %}
-            <ul>
+{% extends 'base.html' %}
+
+{% block title %}
+Profile - {{ block.super }}
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+
+{% block content %}
+<section class="">
+    <div class="container">
+        <h1>My Registrations:</h1>
+        <ul>
+            {% for registration in registrations %}
                 <li>{{ registration.event.name }}</li>
-            </ul>
-        {% endfor %}
-    </body>
-</html>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+<section class="">
+    <div class="container">
+        <h1>My Results:</h1>
+        <ul>
+            {% for each in registrations %}
+            <li>{{ each.event.name }} ~ {% for key, value in each.result.primary.items %} {{key}}: {{value}} | {% endfor %} </li>
+                <ul>
+                    <li>{% for key, value in each.result.extra.items %} {{key}}: {{value}} | {% endfor %}</li>
+                </ul>
+            {% endfor %}
+            {% comment %}
+            {% for each in registrations %}
+            <li>{{each.result.primary.ke}}</li>
+            {% endfor %}
+            {% endcomment %}
+        </ul>
+    </div>
+</section>
+{% endblock %}
