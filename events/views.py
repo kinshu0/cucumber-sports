@@ -5,7 +5,11 @@ from accounts.models import Registration, Profile
 
 from django.contrib.auth.decorators import login_required
 
-from .forms import EventCreation
+from .forms import EventCreation, TrackResult
+
+result_forms = {
+    'TrackResult': TrackResult,
+}
 
 # Create your views here.
 def index_view(request):
@@ -40,3 +44,14 @@ def create_event(request):
     else:
         f = EventCreation()
     return render(request, 'events/create.html', {'form': f})
+
+def add_result(request, event_id):
+    if request.method == 'POST':
+        pass
+    else:
+        event = get_object_or_404(Event, id=event_id)
+        mode = event.sport_mode
+        f = result_forms[mode.which_form]()
+    return render(request, 'events/add-result.html', {'form': f})
+
+# def event_result(request):

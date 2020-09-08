@@ -35,6 +35,10 @@ class Registration(models.Model):
     For instance: 1, 2, 3 for place which would be ascending
     or time: 4:23, 4:30, 4:33 where the ascending order would still create the same position
     '''
-    # bru = models.
-    # result = models.IntegerField(null=True)
-    result = models.JSONField(encoder=DjangoJSONEncoder, null=True)
+
+    '''
+    Schema of this field depends on schema defined in the row pointed by the foreign key stored in the Event's
+    sport_mode field
+    '''
+    result = models.JSONField(null=True)
+    # result = models.JSONField(encoder=DjangoJSONEncoder, null=True)

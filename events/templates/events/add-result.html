@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Add Results - {{ block.super }}
+{% endblock %}
+
+{% block styles %}
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" /> -->
+    
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+{% endblock %}
+
+<!-- {{ form.media }} -->
+
+
+{% block content %}
+<section class="">
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" class="btn btn-primary my-5">
+        </form>
+    </div>
+</section>
+
+    
+{% endblock %}
