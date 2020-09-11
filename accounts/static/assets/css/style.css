@@ -1733,3 +1733,26 @@ section {
     text-shadow: 3px 0px #ff0066;
     font-style: italic;
 }
+
+/*Kinn*/
+
+.search-box {
+    border-radius: 0;
+}
+
+.event-cards {
+    border-radius: 0pt;
+}
+
+.date-badge {
+    background-color: #ff0066;
+    font-size: 0.6rem;
+}
+
+.pink-brand-button {
+    background-color: #ff0066;
+}
+
+.pink-brand-button:hover {
+    background-color: #d20054;
+}

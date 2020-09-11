@@ -43,8 +43,8 @@ def create_event(request):
     return render(request, 'events/create.html', {'form': f})
 
 
-def TrackResultEval(POST):
-    event_result = {}
+def TrackResultEval(request):
+    POST = request.POST
     individual_result = {
         'primary': {
             'Time': POST['time'],
@@ -55,6 +55,7 @@ def TrackResultEval(POST):
             'Splits': '64, 65, 63, 60',
         }
     }
+    event_result = {}
     return event_result, individual_result
 
 result_forms = {
@@ -68,7 +69,7 @@ def add_result(request, event_id):
     
     if request.method == 'POST':
         result_func = result_forms[mode.which_form][1]
-        event_result, individual_result = result_func(request.POST)
+        event_result, individual_result = result_func(request)
 
         registration = Registration.objects.get(event=event, profile=Profile.objects.get(user=request.user))
         registration.result = individual_result

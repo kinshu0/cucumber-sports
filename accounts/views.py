@@ -144,6 +144,7 @@ def login_view(request):
 def profile(request):
     profile = Profile.objects.get(user=request.user)
     context = {
+        'profile': profile,
         'registrations': Registration.objects.filter(profile=profile),
     }
 
