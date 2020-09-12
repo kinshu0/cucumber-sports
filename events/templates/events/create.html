@@ -7,12 +7,6 @@ Create Event - {{ block.super }}
 {% endblock %}
 
 {% block styles %}
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" /> -->
-
-<!-- <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"> -->
-<!-- <link rel="stylesheet" type="text/css"
-    href="{% static 'assets/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}"> -->
-
 {% endblock %}
 
 
@@ -35,53 +29,4 @@ Create Event - {{ block.super }}
 {% endblock %}
 
 {% block scripts %}
-<!-- <script src="{% static 'assets/vendor/bootstrap-datetimepicker/js/moment.js' %}"></script>
-<script src="{% static 'assets/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
-
-<script type="text/javascript">
-    function wrap(el, wrapper) {
-        el.parentNode.insertBefore(wrapper, el);
-        wrapper.appendChild(el);
-    }
-
-    $(function () {
-        $('#id_when').datetimepicker();
-    });
-    jQuery(document).ready(function ($) {
-        if (window.jQuery().datetimepicker) {
-            colZ = document.createElement('div');
-            colZ.className = "col-sm-6";
-            wrap(document.querySelector('#id_when'), colZ);
-
-            rowZ = document.createElement('div');
-            rowZ.className = "row";
-            wrap(colZ, rowZ);
-
-            conZ = document.createElement('div');
-            conZ.className = "container";
-
-            wrap(rowZ, conZ);
-
-            $('#id_when').datetimepicker({
-                // Formats
-                // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
-                format: 'DD-MM-YYYY hh:mm A',
-
-                // Your Icons
-                // as Bootstrap 4 is not using Glyphicons anymore
-                icons: {
-                    time: 'fa fa-clock-o',
-                    date: 'fa fa-calendar',
-                    up: 'fa fa-chevron-up',
-                    down: 'fa fa-chevron-down',
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-check',
-                    clear: 'fa fa-trash',
-                    close: 'fa fa-times'
-                }
-            });
-        }
-    });
-</script> -->
 {% endblock %}
