@@ -77,6 +77,6 @@ def add_result(request, event_id):
 
     else:
         f = result_forms[mode.which_form][0]()
-    return render(request, 'events/add-result.html', {'form': f})
+    return render(request, 'events/add_result.html', {'form': f})
 
 # def event_result(request):

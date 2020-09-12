@@ -2,7 +2,7 @@
 from django.contrib import messages
 # from django.contrib.auth.forms import UserCreationForm
 
-from .forms import CustomUserCreationForm
+from .forms import ProfileCreationForm
 
 from accounts import helpers
 from django.core.mail import send_mail
@@ -12,6 +12,7 @@ from django.conf import settings
 from django.shortcuts import redirect, get_object_or_404, reverse, Http404, render
 
 from .models import Profile, Registration
+from .forms import EditProfileForm
 
 from django.template.loader import get_template
 
@@ -32,7 +33,7 @@ Registration Page
 '''
 def register(request):
     if request.method == 'POST':
-        f = CustomUserCreationForm(request.POST)
+        f = ProfileCreationForm(request.POST)
         if f.is_valid():
             # send email verification now
             activation_key = helpers.generate_activation_key(username=request.POST['username'])
@@ -80,7 +81,7 @@ def register(request):
 
 
     else:
-        f = CustomUserCreationForm()
+        f = ProfileCreationForm()
 
     return render(request, 'accounts/register.html', {'form': f})
 
@@ -113,25 +114,10 @@ def login_view(request):
             login(request, user)
 
             u = Profile.objects.get(user=user)
-            # u = CustomUser.objects.get(username=username)
-            # btcBalance = getBtcBalance(u.btcKey)
 
             ## Set session variables    
             request.session['first_name'] = u.first_name
-            # request.session['username'] = u.username
-            # request.session['btcAddress'] = u.btcAddress
-            # request.session['balance'] = btcBalance
-            # request.session['apiKey'] = u.apiKey
-            # request.session['conversionRate'] = getBtcPrice()
-            # qrBinary = u.qrCodeBinary
-            # request.session['qrCodeBinary'] = json.dumps(qrBinary.decode("utf-8"))
-
-            # ## Find, update and payout games that are not up to date
-            # oddsApiParse.findUpcomingGames()
-            # oddsApiParse.checkForCompletedGames()
-            # oddsApiParse.payoutCompletedGames()
             
-            # return redirect('admin/')
             return redirect(request.POST.get('next'))
             # return redirect(request.POST.get('next', '/accounts/profile'))
         else:
@@ -149,3 +135,19 @@ def profile(request):
     }
 
     return render(request, 'accounts/profile.html', context)
+
+@login_required
+def edit_profile(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    if request.method == 'POST':
+        f = EditProfileForm(request.POST, instance=profile)
+        if f.is_valid():
+            f.save()
+            return redirect('profile_view')
+    else:
+        f = EditProfileForm(initial=vars(profile))
+
+    return render(request, 'accounts/edit_profile.html', {
+        'form': f,
+        'profile': profile,
+    })

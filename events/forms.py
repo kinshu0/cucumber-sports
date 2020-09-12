@@ -8,16 +8,23 @@ from . import models
 from django.utils.timezone import now
 from django.core.exceptions import ValidationError
 
-from tempus_dominus.widgets import DateTimePicker
 
 # from django_jsonforms.forms import JSONSchemaField
 
 class EventCreation(forms.ModelForm):
+
     class Meta:
         model = models.Event
-        fields = ['name', 'when', 'sport_mode']
+
+        fields = [
+            'name', 'description', 'when', 'sport_mode', 'location_name', 'address_1',
+            'address_2', 'city', 'state', 'zip_code'
+        ]
         widgets = {
-            'when': DateTimePicker()
+            'when': forms.DateTimeInput(attrs={
+                'type': 'datetime-local',
+                
+            })
         }
         
     def clean_when(self):

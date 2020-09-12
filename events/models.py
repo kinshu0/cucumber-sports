@@ -1,9 +1,15 @@
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 
-# from common_models import Location
-# Create your models here.
 
+# class Location(models.Model):
+#     name = models.CharField(max_length=255, blank=True)
+#     address_1 = models.CharField(max_length=255, blank=True)
+#     address_2 = models.CharField(max_length=255, blank=True)
+#     city = models.CharField(max_length=255, blank=True)
+#     state = models.CharField(max_length=255, blank=True)
+#     zip_code = models.CharField(max_length=18, blank=True)
+#     country = models.CharField(max_length=90, blank=True)
 
 class SportMode(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -14,19 +20,10 @@ class SportMode(models.Model):
     which_form = models.CharField(max_length=100, null=False, blank=False, default='CustomResult')
 
 
-# class Mode(models.Model):
-#     name = models.CharField()
-#     # descriptor 
-#     sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
-
-# class Sport(models.Model):
-#     name = models.CharField()
-#     description = models.CharField()
-
 class Event(models.Model):
     name = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
     when = models.DateTimeField()
-    # location = models.ForeignKey(Location, on_delete=models.DO_NOTHING)
     sport_mode = models.ForeignKey(SportMode, on_delete=models.DO_NOTHING)
 
     class Status(models.IntegerChoices):
@@ -37,6 +34,15 @@ class Event(models.Model):
         CANCELLED = -3
         POSTPONED = 2
         PREPONED = -2
+
+    
+    location_name = models.CharField(max_length=255, blank=True)
+    address_1 = models.CharField(max_length=255, blank=True)
+    address_2 = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True)
+    state = models.CharField(max_length=255, blank=True)
+    zip_code = models.CharField(max_length=18, blank=True)
+    country = models.CharField(max_length=90, blank=True)
 
     status = models.IntegerField(choices=Status.choices, default=Status.UPCOMING, blank=True)
 

@@ -2,23 +2,29 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import User
-
 from events.models import Event
-
 from django.core.serializers.json import DjangoJSONEncoder
 
-class Profile(models.Model):        
-    # required to associate Author model with User model (Important)
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.DO_NOTHING)
 
-    # additional fields
     activation_key = models.CharField(max_length=255, default=1)
     email_validated = models.BooleanField(default=False)
 
-    first_name = models.CharField(max_length=50, default='')
-    last_name = models.CharField(max_length=50, default='')
-    # first_name = models.CharField(max_length=50)
-    # last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    bio = models.CharField(max_length=150, blank=True)
+
+    '''
+    User Location Data, only gonna ask user to feed city and state
+    '''
+    location_name = models.CharField(max_length=255, blank=True)
+    address_1 = models.CharField(max_length=255, blank=True)
+    address_2 = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True)
+    state = models.CharField(max_length=255, blank=True)
+    zip_code = models.CharField(max_length=18, blank=True)
+    country = models.CharField(max_length=90, blank=True)
 
     def __str__(self):
         return self.user.username

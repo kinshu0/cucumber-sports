@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # 'django_jsonforms',
+    'crispy_forms',
     'tempus_dominus',
     'accounts',
     'events',
@@ -149,3 +150,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'kinshualternate@gmail.com'
 EMAIL_HOST_PASSWORD = 'test@*K9unit'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
