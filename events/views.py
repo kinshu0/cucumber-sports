@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 
 from .models import Event
 from accounts.models import Registration, Profile
@@ -6,7 +6,10 @@ from accounts.models import Registration, Profile
 from django.contrib.auth.decorators import login_required
 
 from .forms import EventCreation, TrackResult
+from django.db.models.expressions import RawSQL
 
+from django.core.serializers import serialize
+from django.core.serializers.json import DjangoJSONEncoder
 
 # Create your views here.
 def index_view(request):
@@ -42,21 +45,44 @@ def create_event(request):
         f = EventCreation()
     return render(request, 'events/create.html', {'form': f})
 
+def edit_event(request, event_id):
+    event = get_object_or_404(Event, event_id)
 
-def TrackResultEval(request):
-    POST = request.POST
-    individual_result = {
-        'primary': {
-            'Time': POST['time'],
-            'Competed': POST['participated']
-            # 'Position': '''other function that will get position from event result data'''
-        },
-        'extra': {
-            'Splits': '64, 65, 63, 60',
-        }
+    if request.method == 'POST':
+        f = EventCreation(request.POST, instance=event)
+        if f.is_valid():
+            f.save()
+            return redirect('events')
+    else:
+        f = EventCreation(initial=vars(event))
+
+    return render(request, 'events/edit_event.html', {'form': f})
+
+
+def TrackResultEval(f, request, event):
+    profile = get_object_or_404(Profile, user=request.user)
+    all_registrations = Registration.objects.filter(event=event)
+    registration = all_registrations.get(profile=profile)
+
+    b = f.cleaned_data.items()
+
+    registration.result = {
+        k: serialize('json', v, cls=DjangoJSONEncoder) for (k, v) in f.cleaned_data.items()
     }
-    event_result = {}
-    return event_result, individual_result
+
+    # registration.result = {
+    #         'Time': f.cleaned_data['result_time'],
+    # }
+
+    registration.save()
+    z = 1
+
+    for x in all_registrations.order_by(RawSQL("result->>%s", ("Time",))):
+        x.result['Position'] = z
+        x.save()
+        z += 1
+
+
 
 result_forms = {
     'TrackResult': (TrackResult, TrackResultEval),
@@ -66,17 +92,18 @@ result_forms = {
 def add_result(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     mode = event.sport_mode
+    r = result_forms[mode.which_form][0]
     
     if request.method == 'POST':
-        result_func = result_forms[mode.which_form][1]
-        event_result, individual_result = result_func(request)
+        f = r(request.POST)
+        if f.is_valid():
+            result_func = result_forms[mode.which_form][1]
+            result_func(f, request, event)
 
-        registration = Registration.objects.get(event=event, profile=Profile.objects.get(user=request.user))
-        registration.result = individual_result
-        registration.save()
+            return redirect('events')
 
     else:
-        f = result_forms[mode.which_form][0]()
+        f = r()
     return render(request, 'events/add_result.html', {'form': f})
 
 # def event_result(request):

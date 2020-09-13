@@ -7,7 +7,7 @@ from . import models
 
 from django.utils.timezone import now
 from django.core.exceptions import ValidationError
-
+from .models import SportMode
 
 # from django_jsonforms.forms import JSONSchemaField
 
@@ -16,11 +16,14 @@ class EventCreation(forms.ModelForm):
     class Meta:
         model = models.Event
 
+        sport_mode = forms.ModelChoiceField(SportMode.objects, to_field_name='name')
+
         fields = [
             'name', 'description', 'when', 'sport_mode', 'location_name', 'address_1',
             'address_2', 'city', 'state', 'zip_code'
         ]
         widgets = {
+            'description': forms.Textarea(),
             'when': forms.DateTimeInput(attrs={
                 'type': 'datetime-local',
                 
@@ -33,14 +36,8 @@ class EventCreation(forms.ModelForm):
             raise ValidationError("The date or time entered is not valid")
         return data
 
-# class AddResult(forms.Form):
-
-#     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None, initial=None, error_class=ErrorList, label_suffix=None, empty_permitted=False, field_order=None, use_required_attribute=None, renderer=None, result_schema=None):
-#         super().__init__(data=data, files=files, auto_id=auto_id, prefix=prefix, initial=initial, error_class=error_class, label_suffix=label_suffix, empty_permitted=empty_permitted, field_order=field_order, use_required_attribute=use_required_attribute, renderer=renderer)
-#         self.fields['result_form'] = JSONSchemaField(schema = result_schema, options = {'theme': 'bootstrap4'})
 
 class TrackResult(forms.Form):
-    
     time = forms.DurationField(required=False)
     participated = forms.BooleanField(required=True)
 
