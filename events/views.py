@@ -84,21 +84,17 @@ def TrackResultEval(f, request, event):
 
 
 
-result_forms = {
-    'TrackResult': (TrackResult, TrackResultEval),
-}
-
 @login_required
 def add_result(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     mode = event.sport_mode
-    r = result_forms[mode.which_form][0]
+    r = mode.result_format.form
     
     if request.method == 'POST':
         f = r(request.POST)
         if f.is_valid():
-            result_func = result_forms[mode.which_form][1]
-            result_func(f, request, event)
+            # result_func = result_forms[mode.which_form][1]
+            # result_func(f, request, event)
 
             return redirect('events')
 

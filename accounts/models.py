@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 from events.models import Event
 from django.core.serializers.json import DjangoJSONEncoder
 
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.DO_NOTHING)
 
@@ -46,5 +49,10 @@ class Registration(models.Model):
     Schema of this field depends on schema defined in the row pointed by the foreign key stored in the Event's
     sport_mode field
     '''
-    result = models.JSONField(null=True)
-    # result = models.JSONField(encoder=DjangoJSONEncoder, null=True)
+    # result = models.JSONField(null=True)
+    # # result = models.JSONField(encoder=DjangoJSONEncoder, null=True)
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+
+    result_format = GenericForeignKey()

@@ -7,9 +7,13 @@ from . import models
 
 from django.utils.timezone import now
 from django.core.exceptions import ValidationError
-from .models import SportMode
+from .models import SportMode, TrackResult
 
 # from django_jsonforms.forms import JSONSchemaField
+
+result_forms = {
+    TrackResult: TrackResultForm,
+}
 
 class EventCreation(forms.ModelForm):
 
@@ -37,9 +41,11 @@ class EventCreation(forms.ModelForm):
         return data
 
 
-class TrackResult(forms.Form):
-    time = forms.DurationField(required=False)
-    participated = forms.BooleanField(required=True)
+class TrackResultForm(forms.ModelForm):
+    
+    class Meta:
+        model = TrackResult
+        fields = ['time']
 
 class TennisResult(forms.Form):
     pass

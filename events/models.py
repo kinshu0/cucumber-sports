@@ -1,16 +1,21 @@
 from django.db import models
-from django.core.serializers.json import DjangoJSONEncoder
+# from django.core.serializers.json import DjangoJSONEncoder
 
 
+from .forms import TrackResultForm
 
+class TrackResult(models.Model):
+
+    time = models.DurationField()
+    position = models.IntegerField()
 
 class SportMode(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
-    
     # registration_schema = models.JSONField()
     # event_schema = models.JSONField()
     # result_schema = 
-    which_form = models.CharField(max_length=100, null=False, blank=False, default='CustomResult')
+    # which_form = models.CharField(max_length=100, null=False, blank=False, default='CustomResult')
+    
 
 
 class Event(models.Model):
