@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # 'django_jsonforms',
     'crispy_forms',
-    'tempus_dominus',
+    # 'tempus_dominus',
     'accounts',
     'events',
     'django.contrib.admin',
