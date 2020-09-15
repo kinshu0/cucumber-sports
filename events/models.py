@@ -1,16 +1,18 @@
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 
-
-
+from .helper import result_choices
 
 class SportMode(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     
+    result_handler = models.CharField(choices=result_choices, default='0', max_length=2)
+
+    schema = models.JSONField()
     # registration_schema = models.JSONField()
     # event_schema = models.JSONField()
     # result_schema = 
-    which_form = models.CharField(max_length=100, null=False, blank=False, default='CustomResult')
+    # which_form = models.CharField(max_length=100, null=False, blank=False, default='CustomResult')
 
 
 class Event(models.Model):
@@ -39,4 +41,4 @@ class Event(models.Model):
 
     status = models.IntegerField(choices=Status.choices, default=Status.UPCOMING, blank=True)
 
-    result = models.JSONField(encoder=DjangoJSONEncoder, null=True)
+    result = models.JSONField(null=True)

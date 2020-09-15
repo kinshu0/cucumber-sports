@@ -36,13 +36,3 @@ class EventCreation(forms.ModelForm):
             raise ValidationError("The date or time entered is not valid")
         return data
 
-
-class TrackResult(forms.Form):
-    time = forms.DurationField(required=False)
-    participated = forms.BooleanField(required=True)
-
-class TennisResult(forms.Form):
-    pass
-
-class CustomResult(forms.Form):
-    pass
