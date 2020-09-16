@@ -11,6 +11,9 @@ from .forms import EventCreation
 # from django.core.serializers import serialize
 # from django.core.serializers.json import DjangoJSONEncoder
 
+from django_jsonforms.forms import JSONSchemaForm
+from .helper import result_functions
+
 # Create your views here.
 def index_view(request):
     upcoming_events = Event.objects.order_by('when')
@@ -87,7 +90,6 @@ def edit_event(request, event_id):
 # result_forms = {
 #     'TrackResult': (TrackResult, TrackResultEval),
 # }
-from django_jsonforms.forms import JSONSchemaForm
 
 @login_required
 def add_result(request, event_id):
@@ -105,8 +107,11 @@ def add_result(request, event_id):
     }, ajax=False)
 
     if request.method == 'POST':
-        # result_func = result_forms[mode.which_form][1]
-        # result_func(f, request, event)
+        profile = get_object_or_404(Profile, user=request.user)
+        form_data = request.POST['json']
+        
+        registration_result = result_functions[mode.result_handler](form_data, event, profile)
+        
         return redirect('events')
     pass
 
@@ -116,4 +121,6 @@ def add_result(request, event_id):
     f = ResultForm
     return render(request, 'events/add_result.html', {'form': f})
 
-# def event_result(request):
+def event_result(request, event_id):
+    registrations = get_list_or_404(Registration, event=get_object_or_404(id=event_id))
+    pass

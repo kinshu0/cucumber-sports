@@ -1,7 +1,11 @@
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 
-from .helper import result_choices
+result_choices = [
+    ('T', 'Timed'),
+    ('P', 'Points'),
+    ('0', 'Unhandled')
+]
 
 class SportMode(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)

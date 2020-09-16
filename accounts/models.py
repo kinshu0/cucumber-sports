@@ -2,8 +2,9 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import User
-from events.models import Event
 from django.core.serializers.json import DjangoJSONEncoder
+
+from events.models import Event
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.DO_NOTHING)
