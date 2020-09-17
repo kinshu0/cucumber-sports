@@ -22,6 +22,7 @@ class SportMode(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=100)
+    event_picture = models.ImageField(upload_to='images/event_pictures', null=True, blank=True)
     description = models.CharField(max_length=1000)
     when = models.DateTimeField()
     sport_mode = models.ForeignKey(SportMode, on_delete=models.DO_NOTHING)

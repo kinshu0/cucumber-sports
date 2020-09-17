@@ -40,7 +40,7 @@ def event_register(request, event_id):
 
 def create_event(request):
     if request.method == 'POST':
-        f = EventCreation(request.POST)
+        f = EventCreation(request.POST, request.FILES)
         if f.is_valid():
             f.save()
             return redirect('events')

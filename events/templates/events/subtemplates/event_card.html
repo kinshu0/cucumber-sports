@@ -1,8 +1,14 @@
 <!--This is each event-->
 <div class="card col-12 col-lg-3 col-md-5 col-sm-5 event-cards m-2">
+    {% if event.event_picture %}
     <img class="card-img-top"
-        src="https://images.pexels.com/photos/1068989/pexels-photo-1068989.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        src="{{ event.event_picture.url }}"
         alt="Card image cap">
+    {% else %}
+        <img class="card-img-top"
+            src="https://images.pexels.com/photos/1068989/pexels-photo-1068989.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            alt="Card image cap">
+    {% endif %}
     <div class="card-img-overlay p-0">
         <div class="align-items-center col-2 d-flex date-badge flex-column p-2 p-lg-2 text-white">
             <div class="row">{{ event.when | date:'M' }}</div>

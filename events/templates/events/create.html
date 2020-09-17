@@ -15,7 +15,7 @@ Create Event - {{ block.super }}
 <section>
     <div class="container">
         <h2>Create Event</h2>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
             <div class="form-group row mt-5">
