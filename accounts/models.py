@@ -9,6 +9,8 @@ from events.models import Event
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.DO_NOTHING)
 
+    profile_picture = models.ImageField(upload_to='images/profile_pictures', null=True, blank=True)
+
     activation_key = models.CharField(max_length=255, default=1)
     email_validated = models.BooleanField(default=False)
 

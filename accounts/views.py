@@ -140,7 +140,7 @@ def profile(request):
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
     if request.method == 'POST':
-        f = EditProfileForm(request.POST, instance=profile)
+        f = EditProfileForm(request.POST, request.FILES, instance=profile)
         if f.is_valid():
             f.save()
             return redirect('profile_view')

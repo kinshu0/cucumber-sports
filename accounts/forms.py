@@ -17,7 +17,7 @@ class ProfileCreationForm(UserCreationForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'bio', 'city', 'state',)
+        fields = ('first_name', 'last_name', 'profile_picture',  'bio', 'city', 'state',)
 
         widgets = {
             'bio': forms.Textarea(),

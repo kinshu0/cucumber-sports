@@ -152,3 +152,6 @@ EMAIL_HOST_USER = 'kinshualternate@gmail.com'
 EMAIL_HOST_PASSWORD = 'test@*K9unit'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'

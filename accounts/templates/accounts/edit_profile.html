@@ -10,7 +10,7 @@
     <section>
         <div class="container" style="border-radius: 1rem;">
             <h2>Edit Profile</h2>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <div class="form-group row mt-5">

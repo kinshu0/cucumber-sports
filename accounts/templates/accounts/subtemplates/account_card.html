@@ -4,8 +4,13 @@
     <div class="col-12 col-lg-4 col-md-5 col-sm-6 col-xl-3 align-items-center border-0 card d-flex flex-column m-0 text-white"
         style="border-radius: 0px; background-color: transparent;">
         <div class="col-5">
-            <img class="card-img-top mb-3 mt-5 rounded-circle" src="{% static 'assets/img/pic.jpg' %}"
+            {% if profile.profile_picture %}
+            <img class="card-img-top mb-3 mt-5 rounded-circle" src="{{ profile.profile_picture.url }}"
                 alt="Card image cap">
+            {% else %}
+            <img class="card-img-top mb-3 mt-5 rounded-circle" src="{% static 'assets/img/pic.png' %}"
+                alt="Card image cap">
+            {% endif %}
         </div>
 
         <div class="align-items-center card-body d-flex flex-column">
