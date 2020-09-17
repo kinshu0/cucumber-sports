@@ -1,0 +1,29 @@
+{% load customtags %}
+<div class="col-11 col-sm-auto container"
+    style="backdrop-filter: blur(1px); background-color: rgba(255, 255, 0, 0.15); border-radius: 0.5rem;">
+    <h3 class="text-light"><i>{{ event_name }}</i></h3>
+    <table class="table table-responsive text-white"
+        style="border-radius: 1rem; background-image: -webkit-linear-gradient(left, rgb(252, 155, 12) 0%, rgb(209, 105, 1) 100%);">
+        <thead style="color: #000000;" class="mw-100 text-uppercase">
+            <tr>
+                {% for col in display_schema.order %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                {% with thkey=display_schema.order|slice:"0:1" %}
+                {% for x in thkey %}
+                <th scope="row">{{ result|dict_get:x }}</th>
+                {% endfor %}
+                {% for col in display_schema.order|slice:"1:" %}
+                <td>{{ result|dict_get:col }}</td>
+                {% endfor %}
+                {% endwith %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

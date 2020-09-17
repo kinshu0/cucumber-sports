@@ -12,7 +12,8 @@ class SportMode(models.Model):
     
     result_handler = models.CharField(choices=result_choices, default='0', max_length=2)
 
-    schema = models.JSONField()
+    result_schema = models.JSONField()
+    display_schema = models.JSONField()
     # registration_schema = models.JSONField()
     # event_schema = models.JSONField()
     # result_schema = 

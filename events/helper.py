@@ -18,6 +18,7 @@ def timed_event(form_data, event, profile):
         else:
             time_duration = f"DQ {converted_form_data['time']['hours'] * 60 + converted_form_data['time']['minutes']}:{converted_form_data['time']['seconds']}"
         converted_form_data['time'] = time_duration
+        converted_form_data.pop('disqualified')
         # final = json.dumps(converted_form_data, cls=DjangoJSONEncoder)
         # all_registrations = Registration.objects.filter(event=event).order_by(RawSQL("result->>%s", ("time",)))
         registration = get_object_or_404(Registration, event=event, profile=profile)
@@ -45,3 +46,6 @@ result_functions = {
     'P': points_event,
     '0': unknown
 }
+
+def display_format(registrations, display_schema):
+    pass

@@ -96,7 +96,7 @@ def add_result(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     mode = event.sport_mode
 
-    result_schema = mode.schema
+    result_schema = mode.result_schema
     ResultForm = JSONSchemaForm(schema=result_schema, options={
         "iconlib": "fontawesome5",
         "no_additional_properties ": True,
@@ -122,5 +122,14 @@ def add_result(request, event_id):
     return render(request, 'events/add_result.html', {'form': f})
 
 def event_result(request, event_id):
-    registrations = get_list_or_404(Registration, event=get_object_or_404(id=event_id))
-    pass
+    event = get_object_or_404(Event, id=event_id)
+    registrations = get_list_or_404(Registration, event=event)
+
+    final = []
+    for i in registrations:
+        i.result['name'] = f'{i.profile.first_name} {i.profile.last_name}'
+        final.append(i.result)
+
+    display_schema = event.sport_mode.display_schema
+
+    return render(request, 'events/results.html', {'event_name': event.name,'results': final, 'display_schema': display_schema})
