@@ -49,17 +49,17 @@ def create_event(request):
     return render(request, 'events/create.html', {'form': f})
 
 def edit_event(request, event_id):
-    event = get_object_or_404(Event, event_id)
+    event = get_object_or_404(Event, id=event_id)
 
     if request.method == 'POST':
-        f = EventCreation(request.POST, instance=event)
+        f = EventCreation(request.POST, request.FILES, instance=event)
         if f.is_valid():
             f.save()
             return redirect('events')
     else:
         f = EventCreation(initial=vars(event))
 
-    return render(request, 'events/edit_event.html', {'form': f})
+    return render(request, 'events/edit_event.html', {'form': f, 'event': event})
 
 
 # def TrackResultEval(f, request, event):
