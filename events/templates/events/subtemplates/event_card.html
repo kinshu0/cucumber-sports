@@ -19,11 +19,16 @@
     </div>
     <div class="card-body d-flex flex-column">
         <h4 class="card-title">{{ event.name }}</h4>
-        <p class="card-text">Status: <i>{{ event.get_status_display }}</i><br>@ {{ event.location_name }}</p>
+        <p class="card-text">Status: <i class="text-primary">{{ event.get_status_display }}</i><br>@ {{ event.location_name }}</p>
         <div class="d-flex justify-content-around mb-2 row">
             <a class="btn btn-info col-5" href="{% url 'specific-event' event.id %}">Details</a>
-            <a class="btn btn-dark col-5 text-white" href="{% url 'specific-event-register' event.id %}">Register</a>
+            <a class="btn btn-dark col-5 text-white" href="{% url 'specific-event' event.id %}#register">Register</a>
         </div>
-        <small>Minimum $5 Buy-in</small>
+        {% if event.registration_fee != 0.00 %}
+        <small>${{ event.registration_fee }} Registration Fee</small>
+        {% else %}
+        <small>No Registration Fee</small>
+        {% endif %}
+
     </div>
 </div>

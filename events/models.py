@@ -23,9 +23,15 @@ class SportMode(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=100)
     event_picture = models.ImageField(upload_to='images/event_pictures', null=True, blank=True)
+
+    description_picture_1 = models.ImageField(upload_to='images/event_pictures', null=True, blank=True)
+    description_picture_2 = models.ImageField(upload_to='images/event_pictures', null=True, blank=True)
+    description_picture_3 = models.ImageField(upload_to='images/event_pictures', null=True, blank=True)
+
     description = models.CharField(max_length=1000)
     when = models.DateTimeField()
     sport_mode = models.ForeignKey(SportMode, on_delete=models.DO_NOTHING)
+    registration_fee = models.DecimalField(decimal_places=2, max_digits=6, default=0)
 
     class Status(models.IntegerChoices):
         UPCOMING = 1
@@ -35,6 +41,8 @@ class Event(models.Model):
         CANCELLED = -3
         POSTPONED = 2
         PREPONED = -2
+
+        FULL = 10
 
     
     location_name = models.CharField(max_length=255, blank=True)
@@ -48,3 +56,5 @@ class Event(models.Model):
     status = models.IntegerField(choices=Status.choices, default=Status.UPCOMING, blank=True)
 
     result = models.JSONField(null=True)
+
+    max_registrations = models.IntegerField(null=True)

@@ -54,7 +54,11 @@
                 </ul>
             </nav>
             <!-- .nav-menu -->
+            {% if user.is_authenticated is not True %}
             <a href="{% url 'register' %}" class="get-started-btn scrollto">Get Started</a>
+            {% else %}
+            <a href="{% url 'events' %}" class="get-started-btn scrollto">Compete</a>
+            {% endif %}
         </div>
     </header>
     <!-- End Header -->

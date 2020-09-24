@@ -21,7 +21,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.shortcuts import redirect
+
 def home(request):
+    if request.user.is_authenticated:
+        return redirect('profile_view')
     return render(request, 'index.html')
 
 

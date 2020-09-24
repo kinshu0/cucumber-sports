@@ -19,7 +19,7 @@ class EventCreation(forms.ModelForm):
         sport_mode = forms.ModelChoiceField(SportMode.objects, to_field_name='name')
 
         fields = [
-            'name', 'event_picture', 'description', 'when', 'sport_mode', 'location_name', 'address_1',
+            'name', 'event_picture', 'description_picture_1', 'description_picture_2', 'description_picture_3', 'description', 'when', 'max_registrations', 'registration_fee', 'sport_mode', 'location_name', 'address_1',
             'address_2', 'city', 'state', 'zip_code'
         ]
         widgets = {
