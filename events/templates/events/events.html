@@ -12,6 +12,7 @@
         <div class="row">
             <h4>Events</h4>
         </div>
+        {% comment %}
         <div class="d-flex d-md-flex justify-content-md-center mt-2 row">
             <input type="text" class="border-left-0 border-top-0 col-8 col-md-6 form-control search-box"
                 placeholder="Search">
@@ -37,6 +38,7 @@
                 </div>
             </div>
         </div>
+        {% endcomment %}
     </div>
     <div class="d-flex flex-row flex-wrap justify-content-center p-1 w-100">
         {% for event in upcoming_events %}

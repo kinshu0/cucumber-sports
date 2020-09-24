@@ -54,7 +54,7 @@
                 </ul>
             </nav>
             <!-- .nav-menu -->
-            <a href="#about" class="get-started-btn scrollto">Get Started</a>
+            <a href="{% url 'register' %}" class="get-started-btn scrollto">Get Started</a>
         </div>
     </header>
     <!-- End Header -->
@@ -92,11 +92,15 @@
                         <ul>
                             <li>
                                 <i class="bx bx-chevron-right"></i>
-                                <a href="#">Home</a>
+                                <a href="{% url 'home' %}">Home</a>
                             </li>
                             <li>
                                 <i class="bx bx-chevron-right"></i>
-                                <a href="#">About us</a>
+                                <a href="{% url 'home' %}#about">About us</a>
+                            </li>
+                            <li>
+                                <i class="bx bx-chevron-right"></i>
+                                <a href="{% url 'home' %}#contact">Contact us</a>
                             </li>
                             <li>
                                 <i class="bx bx-chevron-right"></i>

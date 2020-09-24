@@ -5,6 +5,7 @@
         src="{{ event.event_picture.url }}"
         alt="Card image cap">
     {% else %}
+    <!-- Default image for event -->
         <img class="card-img-top"
             src="https://images.pexels.com/photos/1068989/pexels-photo-1068989.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
             alt="Card image cap">
@@ -18,7 +19,7 @@
     </div>
     <div class="card-body d-flex flex-column">
         <h4 class="card-title">{{ event.name }}</h4>
-        <p class="card-text">Status: <i>Active</i><br>@ Rocky Hill High School</p>
+        <p class="card-text">Status: <i>{{ event.get_status_display }}</i><br>@ {{ event.location_name }}</p>
         <div class="d-flex justify-content-around mb-2 row">
             <a class="btn btn-info col-5" href="{% url 'specific-event' event.id %}">Details</a>
             <a class="btn btn-dark col-5 text-white" href="{% url 'specific-event-register' event.id %}">Register</a>
