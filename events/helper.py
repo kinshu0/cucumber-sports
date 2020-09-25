@@ -14,9 +14,9 @@ def timed_event(form_data, event, profile):
         converted_form_data = json.loads(form_data)
         # time_duration = timedelta(hours=converted_form_data['time']['hours'], minutes=converted_form_data['time']['minutes'], seconds=converted_form_data['time']['seconds'])
         if not converted_form_data['disqualified']:
-            time_duration = f"{converted_form_data['time']['hours'] * 60 + converted_form_data['time']['minutes']}:{converted_form_data['time']['seconds']}"
+            time_duration = f"{converted_form_data['time']['hours'] * 60 + converted_form_data['time']['minutes']:02d}:{converted_form_data['time']['seconds']:02d}"
         else:
-            time_duration = f"DQ {converted_form_data['time']['hours'] * 60 + converted_form_data['time']['minutes']}:{converted_form_data['time']['seconds']}"
+            time_duration = f"DQ {converted_form_data['time']['hours'] * 60 + converted_form_data['time']['minutes']:02d}:{converted_form_data['time']['seconds']:02d   }"
         converted_form_data['time'] = time_duration
         converted_form_data.pop('disqualified')
         # final = json.dumps(converted_form_data, cls=DjangoJSONEncoder)

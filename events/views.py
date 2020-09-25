@@ -105,6 +105,41 @@ def add_result(request, event_id):
     f = ResultForm
     return render(request, 'events/add_result.html', {'form': f})
 
+def organizer_add_result(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    mode = event.sport_mode
+
+    if request.method == 'POST':
+        lolol = request.POST.keys()
+
+        for x in Registration.objects.filter(event=event):
+            helper_arguments = request.POST[f'{x.id}-json'], event, x.profile
+            save_result = result_functions[mode.result_handler](*helper_arguments)
+        
+        return redirect('events')
+        
+    result_schema = mode.result_schema
+    
+    corresponding_forms = {f'{x.profile.first_name} {x.profile.last_name}': JSONSchemaForm(prefix=x.id, schema=result_schema, options={
+        "iconlib": "fontawesome5",
+        "no_additional_properties ": True,
+        "disable_collapse": True,
+        "disable_edit_json": True,
+        "disable_properties": True,
+        "theme": "bootstrap4",
+    }, ajax=False) for x in Registration.objects.filter(event=event)}
+
+    ResultForm = JSONSchemaForm(schema=result_schema, options={
+        "iconlib": "fontawesome5",
+        "no_additional_properties ": True,
+        "disable_collapse": True,
+        "disable_edit_json": True,
+        "disable_properties": True,
+        "theme": "bootstrap4",
+    }, ajax=False)
+
+    return render(request, 'events/organizer_add_result.html', {'formScripts': ResultForm.media, 'stuff': corresponding_forms})
+
 def event_result(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     registrations = get_list_or_404(Registration, event=event)

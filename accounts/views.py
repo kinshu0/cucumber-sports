@@ -118,7 +118,10 @@ def login_view(request):
             ## Set session variables    
             request.session['first_name'] = u.first_name
             
-            return redirect(request.POST.get('next'))
+            if len(request.POST.get('next')) > 1:
+                return redirect(request.POST.get('next'))
+            return redirect('profile_view')
+
             # return redirect(request.POST.get('next', '/accounts/profile'))
         else:
             return render(request, 'accounts/login.html', {'message': 'Invalid Login'})
