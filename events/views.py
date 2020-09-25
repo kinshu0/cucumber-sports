@@ -12,7 +12,7 @@ from .forms import EventCreation
 # from django.core.serializers.json import DjangoJSONEncoder
 
 from django_jsonforms.forms import JSONSchemaForm
-from .helper import result_functions
+from .helper import result_functions, prize_functions
 
 # Create your views here.
 def index_view(request):
@@ -25,15 +25,29 @@ def index_view(request):
 def specific_event(request, event_id):
     sp_event = get_object_or_404(Event, id=event_id)
     
+    prize_handler_key = sp_event.sport_mode.result_handler
+    prize_function = prize_functions[prize_handler_key]
+
+    prize_section = prize_function(sp_event)
+    
     return render(request, 'events/specific.html', {
         'event': sp_event,
+        'prize_section_template': prize_section,
     })
 
 @login_required
 def event_register(request, event_id):
+    event = Event.objects.get(id=event_id)
+    profile = Profile.objects.get(user=request.user)
+    if event.max_registrations:
+        if event.max_registrations == Registration.objects.filter(event=event, profile=profile).count():
+            return render(request, 'events/specific.html', {'event_errors': ['Sorry, event registration is full.'], 'anchor': 'register'})
+    if Registration.objects.filter(profile=profile, event=event).exists():
+        return render(request, 'events/specific.html', {'event': event, 'event_errors': ['You are already registered for this event!'], 'anchor': 'register'})
+
     registration = Registration(
-        profile = Profile.objects.get(user=request.user),
-        event = Event.objects.get(id=event_id)
+        profile = profile,
+        event = event
     )
     registration.save()
     return render(request, 'events/successful.html')
@@ -62,40 +76,19 @@ def edit_event(request, event_id):
     return render(request, 'events/edit_event.html', {'form': f, 'event': event})
 
 
-# def TrackResultEval(f, request, event):
-#     profile = get_object_or_404(Profile, user=request.user)
-#     all_registrations = Registration.objects.filter(event=event)
-#     registration = all_registrations.get(profile=profile)
-
-#     b = f.cleaned_data.items()
-
-#     registration.result = {
-#         k: serialize('json', v, cls=DjangoJSONEncoder) for (k, v) in f.cleaned_data.items()
-#     }
-
-#     # registration.result = {
-#     #         'Time': f.cleaned_data['result_time'],
-#     # }
-
-#     registration.save()
-#     z = 1
-
-#     for x in all_registrations.order_by(RawSQL("result->>%s", ("Time",))):
-#         x.result['Position'] = z
-#         x.save()
-#         z += 1
-
-
-
-# result_forms = {
-#     'TrackResult': (TrackResult, TrackResultEval),
-# }
-
 @login_required
 def add_result(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     mode = event.sport_mode
 
+    if request.method == 'POST':
+        profile = get_object_or_404(Profile, user=request.user)
+        form_data = request.POST['json']
+        
+        registration_result = result_functions[mode.result_handler](form_data, event, profile)
+        
+        return redirect('events')
+        
     result_schema = mode.result_schema
     ResultForm = JSONSchemaForm(schema=result_schema, options={
         "iconlib": "fontawesome5",
@@ -105,16 +98,7 @@ def add_result(request, event_id):
         "disable_properties": True,
         "theme": "bootstrap4",
     }, ajax=False)
-
-    if request.method == 'POST':
-        profile = get_object_or_404(Profile, user=request.user)
-        form_data = request.POST['json']
-        
-        registration_result = result_functions[mode.result_handler](form_data, event, profile)
-        
-        return redirect('events')
-    pass
-
+    
     # else:
     #     f = r()
     # return render(request, 'events/add_result.html', {'result_schema': result_schema})

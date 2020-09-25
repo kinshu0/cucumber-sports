@@ -72,11 +72,13 @@
             </div>
         </section>
 
+        {{ prize_section_template }}
+<!-- 
         <section id="money" class="about p-4">
             <div class="container p-3" data-aos="fade-up">
                 <div class="row">
                     <div class="col-lg-6 pt-3 pt-lg-0 content">
-                        <h3>Prize</h3>
+                        <h3>Current Prize</h3>
                         <p>Total: $100</p>
                         <p>Place Stakes:</p>
                         <ul>
@@ -93,7 +95,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <section id="time-and-location" class="about p-4">
             <div class="container p-3" data-aos="fade-up">
@@ -110,7 +112,23 @@
             <a type="button" href="{% url 'specific-event-register' event.id %}" class="btn btn-dark col-8 col-md-4">REGISTER</a>
         </div>
 
+        {% if event_errors %}
+            {% for message in event_errors %}
+                <div class="row w-100 justify-content-center text-danger">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
     </main>
 
 </body>
+{% endblock %}
+
+{% block scripts %}
+    {% if anchor %}
+    <script type='text/javascript'>
+    $(document).ready(function(){
+        window.location = '#{{ anchor }}'
+    });
+    </script>
+    {% endif %}
 {% endblock %}
