@@ -1,3 +1,6 @@
+from decimal import Decimal, getcontext
+from django.template.loader import get_template
+from django.template import Context
 from django.shortcuts import get_object_or_404
 from accounts.models import Registration
 
@@ -8,6 +11,7 @@ import json
 from datetime import timedelta
 
 from django.db.models.expressions import RawSQL
+
 
 def timed_event(form_data, event, profile):
     try:
@@ -21,21 +25,28 @@ def timed_event(form_data, event, profile):
         converted_form_data.pop('disqualified')
         # final = json.dumps(converted_form_data, cls=DjangoJSONEncoder)
         # all_registrations = Registration.objects.filter(event=event).order_by(RawSQL("result->>%s", ("time",)))
-        registration = get_object_or_404(Registration, event=event, profile=profile)
+        registration = get_object_or_404(
+            Registration, event=event, profile=profile)
         # registration.result = final
         registration.result = converted_form_data
         registration.save()
-        all_registrations = Registration.objects.filter(event=event).order_by(RawSQL("result->>%s", ("time",)))
+        all_registrations = Registration.objects.filter(
+            event=event).order_by(RawSQL("result->>%s", ("time",)))
         x = 1
         for i in all_registrations:
+            if not i.result:
+                i.result = {'#': 0}
             i.result['#'] = x
+            i.result_place = x
             x += 1
             i.save()
     except:
         raise Exception("Error Saving or getting Registration object lol")
 
+
 def points_event():
     pass
+
 
 def unknown():
     pass
@@ -47,31 +58,38 @@ result_functions = {
     '0': unknown
 }
 
+
 def display_format(registrations, display_schema):
     pass
 
-from decimal import Decimal, getcontext
-from django.template import Context
-from django.template.loader import get_template
 
 getcontext().prec = 2
 
-def place_prize(event, is_flat_fee=False, percent_fee=Decimal(0.1), flat_fee=Decimal(10), first_share=Decimal(0.5), second_share = Decimal(0.3), third_share = Decimal(0.2)):
+place_prize_settings = {
+    'is_flat_fee': False,
+    'percent_fee': Decimal(0.1),
+    'flat_fee': Decimal(10),
+    'first_share': Decimal(0.5),
+    'second_share':  Decimal(0.3),
+    'third_share':  Decimal(0.2),
+}
+
+
+def place_prize_display(event):
     number_of_registrations = Registration.objects.filter(event=event).count()
     registration_fee = event.registration_fee
 
     total_prize = number_of_registrations * registration_fee
 
-    if is_flat_fee:
-        awardable_prize = total_prize - flat_fee
+    if place_prize_settings['is_flat_fee']:
+        awardable_prize = total_prize - place_prize_settings['flat_fee']
 
     else:
-        awardable_prize = total_prize * (1-percent_fee)
+        awardable_prize = total_prize * (1-place_prize_settings['percent_fee'])
 
-
-    first_prize = first_share * awardable_prize
-    second_prize = second_share * awardable_prize
-    third_prize = third_share * awardable_prize
+    first_prize = place_prize_settings['first_share'] * awardable_prize
+    second_prize = place_prize_settings['second_share'] * awardable_prize
+    third_prize = place_prize_settings['third_share'] * awardable_prize
 
     awardable_prize = total_prize - first_prize - second_prize - third_prize
 
@@ -83,16 +101,51 @@ def place_prize(event, is_flat_fee=False, percent_fee=Decimal(0.1), flat_fee=Dec
         'third_prize': f'{third_prize:.2f}',
     }
 
-    return prize_template.render(prize_template_context)
+    return prize_template.render(prize_template_context), prize_template_context
+
 
 def win_loss_prize():
     pass
 
+
 def unknown():
     pass
 
-prize_functions = {
-    'T': place_prize,
+
+prize_display_functions = {
+    'T': place_prize_display,
     'P': win_loss_prize,
     '0': unknown
+}
+
+
+def place_prize_calc(event, commit=False):
+    prize_page, prize_context = place_prize_display(event=event)
+    first_place = Registration.objects.get(result_place=1)
+    second_place = Registration.objects.get(result_place=2)
+    third_place = Registration.objects.get(result_place=3)
+    
+    first_place.amount_won = Decimal(prize_context['first_prize'])
+    second_place.amount_won = Decimal(prize_context['second_prize'])
+    third_place.amount_won = Decimal(prize_context['third_prize'])
+
+    if commit:
+        first_place.save()
+        second_place.save()
+        third_place.save()
+
+    return first_place, second_place, third_place
+
+def win_prize_calc():
+    pass
+
+
+def unknown_calc():
+    pass
+
+
+prize_calc_functions = {
+    'T': place_prize_calc,
+    'P': win_prize_calc,
+    '0': unknown_calc
 }

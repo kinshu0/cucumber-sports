@@ -12,7 +12,7 @@ from .forms import EventCreation
 # from django.core.serializers.json import DjangoJSONEncoder
 
 from django_jsonforms.forms import JSONSchemaForm
-from .helper import result_functions, prize_functions
+from .helper import result_functions, prize_display_functions, prize_calc_functions
 
 # Create your views here.
 def index_view(request):
@@ -26,9 +26,9 @@ def specific_event(request, event_id):
     sp_event = get_object_or_404(Event, id=event_id)
     
     prize_handler_key = sp_event.sport_mode.result_handler
-    prize_function = prize_functions[prize_handler_key]
+    prize_function = prize_display_functions[prize_handler_key]
 
-    prize_section = prize_function(sp_event)
+    prize_section, prize_section_context = prize_function(sp_event)
     
     return render(request, 'events/specific.html', {
         'event': sp_event,
@@ -39,9 +39,10 @@ def specific_event(request, event_id):
 def event_register(request, event_id):
     event = Event.objects.get(id=event_id)
     profile = Profile.objects.get(user=request.user)
-    if event.max_registrations:
-        if event.max_registrations == Registration.objects.filter(event=event, profile=profile).count():
-            return render(request, 'events/specific.html', {'event_errors': ['Sorry, event registration is full.'], 'anchor': 'register'})
+
+    if event.status == 10:
+        return render(request, 'events/specific.html', {'event_errors': ['Sorry, event registration is full.'], 'anchor': 'register'})
+            
     if Registration.objects.filter(profile=profile, event=event).exists():
         return render(request, 'events/specific.html', {'event': event, 'event_errors': ['You are already registered for this event!'], 'anchor': 'register'})
 
@@ -50,6 +51,11 @@ def event_register(request, event_id):
         event = event
     )
     registration.save()
+
+    if event.max_registrations:
+        if event.max_registrations == Registration.objects.filter(event=event, profile=profile).count():
+            event.status = 10
+
     return render(request, 'events/successful.html')
 
 def create_event(request):
@@ -152,3 +158,17 @@ def event_result(request, event_id):
     display_schema = event.sport_mode.display_schema
 
     return render(request, 'events/results.html', {'event_name': event.name,'results': final, 'display_schema': display_schema})
+
+def release_payment(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    mode = event.sport_mode
+
+    calculate_function = prize_calc_functions[mode.result_handler]
+
+    payment = calculate_function(event, commit=False)
+
+    if request.method == 'POST':
+        calculate_function(event, commit=True)
+        return redirect('events')
+
+    return render(request, 'events/confirm_release_pay.html', {'payment': payment})

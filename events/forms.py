@@ -37,3 +37,16 @@ class EventCreation(forms.ModelForm):
             raise ValidationError("The date or time entered is not valid")
         return data
 
+'''
+Event Completion Form -> Trigger Payment
+'''
+class Event_Completion(forms.ModelForm):
+
+    class Meta:
+        model = models.Event
+        
+        fields = [
+            'status'
+        ]
+        widgets = {
+        }
