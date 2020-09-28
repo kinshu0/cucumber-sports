@@ -67,11 +67,11 @@ getcontext().prec = 2
 
 place_prize_settings = {
     'is_flat_fee': False,
-    'percent_fee': Decimal(0.1),
-    'flat_fee': Decimal(10),
-    'first_share': Decimal(0.5),
-    'second_share':  Decimal(0.3),
-    'third_share':  Decimal(0.2),
+    'percent_fee': Decimal('0.1'),
+    'flat_fee': Decimal('10'),
+    'first_share': Decimal('0.5'),
+    'second_share':  Decimal('0.3'),
+    'third_share':  Decimal('0.2'),
 }
 
 
@@ -85,13 +85,13 @@ def place_prize_display(event):
         awardable_prize = total_prize - place_prize_settings['flat_fee']
 
     else:
-        awardable_prize = total_prize * (1-place_prize_settings['percent_fee'])
+        awardable_prize = total_prize * (Decimal('1.00')-place_prize_settings['percent_fee'])
 
     first_prize = place_prize_settings['first_share'] * awardable_prize
     second_prize = place_prize_settings['second_share'] * awardable_prize
     third_prize = place_prize_settings['third_share'] * awardable_prize
 
-    awardable_prize = total_prize - first_prize - second_prize - third_prize
+    my_fee = total_prize - first_prize - second_prize - third_prize
 
     prize_template = get_template('events/subtemplates/place_prize.html')
     prize_template_context = {
