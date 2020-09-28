@@ -60,7 +60,13 @@
 
     <main id="main"
         style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #212529; text-align: left; background-color: #fff;">
-
+        
+        {% if request.user == event.creator %}
+        <section id="event_management">
+            {% include 'events/subtemplates/event_management_tab.html' %}
+        </section>
+        {% endif %}
+        
         <section id="description" class="about p-4">
             <div class="container p-3" data-aos="fade-up">
                 <div class="row">
@@ -102,14 +108,22 @@
                 <div class="row">
                     <div class="col-lg-6 pt-3 pt-lg-0 content">
                         <h3>Time and Location</h3>
-                        <p>{{ event.when }} @ Track of Rocky Hill High School</p>
+                        <p>{{ event.when }} @ {{ event.location_name }}</p>
+                        <p>{{ event.address_1 }},</p>
+                        {% if event.address_2 %}<p>{{ event.address_2 }},</p>{% endif %}
+                        <p>{{ event.city }}, {{ event.state }}-{{ event.zip_code }}</p>
+
                     </div>
                 </div>
             </div>
         </section>
 
         <div id="register" class="d-flex justify-content-around mb-5 row w-100">
+        {% if event.status == 1 %}
             <a type="button" href="{% url 'specific-event-register' event.id %}" class="btn btn-dark col-8 col-md-4">REGISTER</a>
+        {% elif event.status == -1 %}
+            <a type="button" href="{% url 'specific-event-result' event.id %}" class="btn btn-info col-8 col-md-4">RESULTS</a>
+        {% endif %}
         </div>
 
         {% if event_errors %}
@@ -118,6 +132,11 @@
             {% endfor %}
         {% endif %}
 
+        {% if event_messages %}
+            {% for message in event_messages %}
+                <div class="row w-100 justify-content-center text-success">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
     </main>
 
 </body>

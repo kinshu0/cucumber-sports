@@ -16,7 +16,7 @@ class EventCreation(forms.ModelForm):
     class Meta:
         model = models.Event
 
-        sport_mode = forms.ModelChoiceField(SportMode.objects, to_field_name='name')
+        sport_mode = forms.ModelChoiceField(SportMode.objects)
 
         fields = [
             'name', 'event_picture', 'description_picture_1', 'description_picture_2', 'description_picture_3',

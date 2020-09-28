@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib.auth.models import User
 
 result_choices = [
     ('T', 'Timed'),
@@ -18,9 +19,12 @@ class SportMode(models.Model):
     # event_schema = models.JSONField()
     # result_schema = 
     # which_form = models.CharField(max_length=100, null=False, blank=False, default='CustomResult')
-
+    def __str__(self):
+        return self.name
 
 class Event(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
     name = models.CharField(max_length=100)
     event_picture = models.ImageField(upload_to='images/event_pictures', null=True, blank=True)
 
@@ -34,7 +38,7 @@ class Event(models.Model):
     registration_fee = models.DecimalField(decimal_places=2, max_digits=6, default=0)
 
     class Status(models.IntegerChoices):
-        UPCOMING = 1
+        OPEN = 1
         IN_PROGRESS = 0
         ENDED = -1
 
@@ -42,7 +46,7 @@ class Event(models.Model):
         POSTPONED = 2
         PREPONED = -2
 
-        FULL = 10
+        CLOSED = 10
 
     
     location_name = models.CharField(max_length=255, blank=True)
@@ -53,8 +57,10 @@ class Event(models.Model):
     zip_code = models.CharField(max_length=18, blank=True)
     country = models.CharField(max_length=90, blank=True)
 
-    status = models.IntegerField(choices=Status.choices, default=Status.UPCOMING, blank=True)
+    status = models.IntegerField(choices=Status.choices, default=Status.OPEN, blank=True)
 
     result = models.JSONField(null=True)
 
     max_registrations = models.IntegerField(null=True)
+    def __str__(self):
+        return self.name

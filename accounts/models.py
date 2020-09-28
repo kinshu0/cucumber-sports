@@ -53,3 +53,5 @@ class Registration(models.Model):
     # result = models.JSONField(encoder=DjangoJSONEncoder, null=True)
     result_place = models.IntegerField(null=True)
     amount_won = models.DecimalField(null=True, decimal_places=2, max_digits=6)
+    def __str__(self):
+        return f'{self.profile}-{self.event}'

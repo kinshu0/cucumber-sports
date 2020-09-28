@@ -19,7 +19,7 @@
     </div>
     <div class="card-body d-flex flex-column">
         <h4 class="card-title">{{ event.name }}</h4>
-        <p class="card-text">Status: <i class="text-primary">{{ event.get_status_display }}</i><br>@ {{ event.location_name }}</p>
+        <p class="card-text">Status: <i class="{% if event.status == 1 %}text-primary{% else %}text-danger{% endif %}">{{ event.get_status_display }}</i><br>@ {% if event.location_name %}{{ event.location_name }}{% else %}{{ event.address_1 }}{% endif %}</p>
         <div class="d-flex justify-content-around mb-2 row">
             <a class="btn btn-info col-5" href="{% url 'specific-event' event.id %}">Details</a>
             <a class="btn btn-dark col-5 text-white" href="{% url 'specific-event' event.id %}#register">Register</a>

@@ -13,7 +13,9 @@ from .forms import EventCreation
 
 from django_jsonforms.forms import JSONSchemaForm
 from .helper import result_functions, prize_display_functions, prize_calc_functions
+from django.contrib.auth.decorators import permission_required
 
+from django.core.exceptions import PermissionDenied
 # Create your views here.
 def index_view(request):
     upcoming_events = Event.objects.order_by('when')
@@ -40,29 +42,38 @@ def event_register(request, event_id):
     event = Event.objects.get(id=event_id)
     profile = Profile.objects.get(user=request.user)
 
+
+    if event.status == -1:
+        return render(request, 'events/specific.html', {'event_errors': ['Sorry, event has ended.'], 'anchor': 'register'})
     if event.status == 10:
         return render(request, 'events/specific.html', {'event_errors': ['Sorry, event registration is full.'], 'anchor': 'register'})
             
     if Registration.objects.filter(profile=profile, event=event).exists():
         return render(request, 'events/specific.html', {'event': event, 'event_errors': ['You are already registered for this event!'], 'anchor': 'register'})
 
-    registration = Registration(
-        profile = profile,
-        event = event
-    )
-    registration.save()
+    if request.method == 'POST':
+        registration = Registration(
+            profile = profile,
+            event = event
+        )
+        registration.save()
 
-    if event.max_registrations:
-        if event.max_registrations == Registration.objects.filter(event=event, profile=profile).count():
-            event.status = 10
+        if event.max_registrations:
+            if event.max_registrations == Registration.objects.filter(event=event, profile=profile).count():
+                event.status = 10
 
-    return render(request, 'events/successful.html')
+        return render(request, 'events/specific.html', {'event': event, 'event_messages': ['You have successfully registered for this event!'], 'anchor': 'register'})
+    return render(request, 'events/registration_confirmation.html', {'event': event})
 
+@login_required
+@permission_required('events.add_event')
 def create_event(request):
     if request.method == 'POST':
         f = EventCreation(request.POST, request.FILES)
         if f.is_valid():
-            f.save()
+            saved_event = f.save()
+            saved_event.creator = request.user
+            saved_event.save()
             return redirect('events')
     else:
         f = EventCreation()
@@ -70,6 +81,9 @@ def create_event(request):
 
 def edit_event(request, event_id):
     event = get_object_or_404(Event, id=event_id)
+
+    if not request.user == event.creator:
+        raise PermissionDenied
 
     if request.method == 'POST':
         f = EventCreation(request.POST, request.FILES, instance=event)
@@ -111,9 +125,13 @@ def add_result(request, event_id):
     f = ResultForm
     return render(request, 'events/add_result.html', {'form': f})
 
+@login_required
 def organizer_add_result(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     mode = event.sport_mode
+
+    if not request.user == event.creator:
+        raise PermissionDenied
 
     if request.method == 'POST':
         lolol = request.POST.keys()
@@ -122,6 +140,9 @@ def organizer_add_result(request, event_id):
             helper_arguments = request.POST[f'{x.id}-json'], event, x.profile
             save_result = result_functions[mode.result_handler](*helper_arguments)
         
+        event.status = -1
+        event.save()
+
         return redirect('events')
         
     result_schema = mode.result_schema
@@ -159,9 +180,13 @@ def event_result(request, event_id):
 
     return render(request, 'events/results.html', {'event_name': event.name,'results': final, 'display_schema': display_schema})
 
+@login_required
 def release_payment(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     mode = event.sport_mode
+
+    if not request.user == event.creator:
+        raise PermissionDenied
 
     calculate_function = prize_calc_functions[mode.result_handler]
 
