@@ -102,6 +102,24 @@
                 </div>
             </div>
         </section> -->
+        {% comment %}
+        {% if event.participants_public %}
+        <section id="participants" class="about p-4">
+            <div class="container p-3" data-aos="fade-up">
+                <div class="row">
+                    <div class="col-lg-6 pt-3 pt-lg-0 content">
+                        <h3>Participants</h3>
+                        <ol>
+                            {% for registration in registrations %}
+                            <li>{{ registration.profile.first_name }} {{ registration.profile.last_name }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+        {% endcomment %}
 
         <section id="time-and-location" class="about p-4">
             <div class="container p-3" data-aos="fade-up">

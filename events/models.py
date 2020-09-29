@@ -25,6 +25,8 @@ class SportMode(models.Model):
 class Event(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
+    participants_public = models.BooleanField(default=True)
+
     name = models.CharField(max_length=100)
     event_picture = models.ImageField(upload_to='images/event_pictures', null=True, blank=True)
 
