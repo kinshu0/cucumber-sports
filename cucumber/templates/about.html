@@ -1,0 +1,208 @@
+{% extends 'base_transparent_header.html' %}
+{% load static %}
+
+{% block title %}
+About {{ block.super }}
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+    .pink-brand-button {
+        background-color: #ff0066;
+    }
+
+    .pink-brand-button:hover {
+        background-color: #d20054;
+    }
+
+    /* About Page Hero */
+
+    #hero-about {
+        width: 100%;
+        height: 100vh;
+        background: url("{% static 'assets/img/hero-about-bg.jpg' %}") top center;
+        background-size: cover;
+        position: relative;
+        padding: 0;
+    }
+
+    #hero-about:before {
+        content: "";
+        background: rgba(13, 20, 26, 0.521);
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    #hero-about .hero-about-container {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+
+    #hero-about .row {
+        padding: 1rem;
+    }
+
+    #hero-about .btn-get-started {
+        /* font-family: "Open Sans", sans-serif;
+    text-transform: capitalize;
+    font-weight: 500;
+    font-size: 14px; */
+        display: inline-block;
+        padding: 10px 35px 10px 35px;
+        border-radius: 2px;
+        transition: 0.5s;
+        color: #fff;
+        background: #ff0066;
+        border: 2px solid #ff0066;
+    }
+
+    #hero-about .btn-get-started:hover {
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    #hero-about .btn-watch-video {
+        /* font-size: 16px; */
+        display: inline-block;
+        padding: 10px 25px 8px 40px;
+        transition: 0.5s;
+        margin-left: 25px;
+        color: #fff;
+        position: relative;
+    }
+
+    /* #hero-about .btn-watch-video i {
+    color: #fff;
+    font-size: 32px;
+    position: absolute;
+    left: 0;
+    top: 7px;
+    transition: 0.3s;
+} */
+
+    #hero-about .btn-watch-video:hover i {
+        color: #ff0066;
+    }
+
+
+    .about-heading {
+        font-size: 4rem;
+    }
+
+    @media (min-width: 1440px) {}
+
+    @media (min-width: 1280px) {}
+
+    @media (min-width: 1024px) {}
+
+    @media (max-width: 800px) {
+        /* #hero-about .about-heading {
+        font-size: 3.5rem;
+    } */
+    }
+
+    @media (max-width: 768px) {
+        /* #hero-about .about-heading {
+        font-size: 3.5rem;
+    } */
+    }
+
+    @media (max-width: 600px) {
+        #hero-about .about-heading {
+            font-size: 3.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #hero-about .about-heading {
+            font-size: 3.5rem;
+        }
+    }
+
+    @media (max-width: 325px) {
+        #hero-about .about-heading {
+            font-size: 3.2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block hero %}
+<section id="hero-about" class="text-white">
+    <div data-aos="fade-up" data-aos-delay="150" class="hero-about-container">
+        <div class="d-flex justify-content-center row">
+            <div class="col-11 w-100">
+                <h4 class="about-heading display-1">Our mission is to bring athletes together and continue the
+                    spirit of challenge</h4>
+            </div>
+        </div>
+        <h5><i class="icofont-simple-down"></i></h5>
+    </div>
+</section>
+<section>
+{% endblock %}
+
+{% block content %}
+<body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8 mb-sm-0">
+                    <h2 class="display-4 mb-5">Purpose</h2>
+                    <p class="lead">We aim to provide every athlete with an opportunity to experience the thrill of
+                        challenge by allowing them to compete with other likeminded individuals while becoming part of a
+                        greater community</p>
+                </div>
+                <div class="col-12 col-md-4"
+                    style="background-image: url(&quot;{% static 'assets/img/runninggroup.jpg' %}&quot;); background-size: cover;">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-light">
+        <div class="container">
+            <h2 class="display-4 mb-5 text-center">The Team</h2>
+            <div class="d-flex flex-row flex-wrap justify-content-center p-1 w-100">
+                <div class="card col-12 col-lg-6 col-md-8 col-sm-12 m-2">
+                    <img src="{% static 'assets/img/rect.JPG' %}" class="card-img-top">
+                    <div class="card-body">
+                        <h4 class="card-title">Kinshu Gupta</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Founder and Owner</h6>
+                        <p class="card-text">Cucumber Sports has been a sole propriotership as yet, started up with the
+                            help of friends and family</p>
+                        <a href="mailto:kinshugupta2002@gmail.com" class="btn btn-primary">Contact via email</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="contact" class="jumbotron">
+        <p class="lead">We welcome anyone interested in joining us, having any ideas, or just wanting to talk to contact
+            us!</p>
+        <hr class="my-4">
+        <a href="mailto:info@cucumbersports.com">info@cucumbersports.com</a>
+    </div>
+</body>
+{% endblock %}

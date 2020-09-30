@@ -28,6 +28,12 @@ Login - {{ block.super }}
         <div class="border-top pt-3">
             Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
         </div>
+
+        {% if event_messages %}
+        {% for message in event_messages %}
+            <div class="row w-100 justify-content-center text-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
     </div>
 
 </section>

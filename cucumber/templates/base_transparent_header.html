@@ -31,22 +31,22 @@
 
 <body>
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top header-inner-pages">
+    <header id="header" class="fixed-top">
         <div class="container-fluid d-flex align-items-center justify-content-between">
-            <a href="{% url 'home' %}" class="col-5 col-md-1 col-md-2 col-sm-3 logo"><img
+
+
+            <a href="" class="col-5 col-md-1 col-md-2 col-sm-3 logo"><img
                     src="{% static 'assets/img/brand/logo-text-dark.png' %}" alt="" class="img-fluid"></a>
-
-
-            <nav class="nav-menu d-none d-lg-block">
+            <nav class="d-lg-block d-none nav-menu">
                 <ul>
                     <li>
-                        <a href="{% url 'home' %}">HOME</a>
+                        <a href="{% url 'home' %}">Home</a>
                     </li>
                     <li>
-                        <a href="{% url 'events' %}">EVENTS</a>
+                        <a href="{% url 'events' %}">Events</a>
                     </li>
-                    <li>
-                        <a href="{% url 'about' %}">ABOUT</a>
+                    <li class="active">
+                        <a href="{% url 'about' %}">About</a>
                     </li>
                     <li>
                         <a href="{% url 'about' %}#contact">Contact</a>
@@ -62,6 +62,9 @@
         </div>
     </header>
     <!-- End Header -->
+    <!-- ======= Hero Section ======= -->
+    {% block hero %}{% endblock %}
+    <!-- End Hero -->
     <main id="main">
         <!-- ======= Breadcrumbs ======= -->
         <!-- End Breadcrumbs -->

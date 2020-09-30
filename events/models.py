@@ -7,6 +7,7 @@ result_choices = [
     ('P', 'Points'),
     ('0', 'Unhandled')
 ]
+from decimal import Decimal
 
 class SportMode(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -37,7 +38,7 @@ class Event(models.Model):
     description = models.CharField(max_length=1000)
     when = models.DateTimeField()
     sport_mode = models.ForeignKey(SportMode, on_delete=models.DO_NOTHING)
-    registration_fee = models.DecimalField(decimal_places=2, max_digits=6, default=0)
+    registration_fee = models.DecimalField(decimal_places=2, max_digits=6, default=Decimal('0.00'))
 
     class Status(models.IntegerChoices):
         OPEN = 1
@@ -63,6 +64,11 @@ class Event(models.Model):
 
     result = models.JSONField(null=True)
 
+    payment_released = models.BooleanField(default=False)
+
     max_registrations = models.IntegerField(null=True)
+
+    sponsored_prize = models.DecimalField(decimal_places=2, max_digits=8, default=Decimal('0.00'))
+
     def __str__(self):
         return self.name

@@ -36,10 +36,15 @@ def specific_event(request, event_id, optional_context=None):
 
     prize_section, prize_section_context = prize_function(sp_event)
 
+
     context = {
         'event': sp_event,
         'prize_section_template': prize_section,
     }
+
+    if Registration.objects.filter(profile=request.user.profile, event=sp_event).exists():
+        context.update({'registered': True})
+
     if optional_context:
         context.update(optional_context)
     # if sp_event.participants_public:
@@ -47,6 +52,21 @@ def specific_event(request, event_id, optional_context=None):
 
     return render(request, 'events/specific.html', context=context)
 
+@login_required
+def event_deregister(request, event_id):
+    event = Event.objects.get(id=event_id)
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        Registration.objects.get(
+            profile=profile,
+            event=event
+        ).delete()
+
+        return specific_event(request, event_id, {'event_messages': ['You have successfully cancelled your registration for this event'], 'anchor': 'register'})
+        # return render(request, 'events/specific.html', {'event': event, 'event_messages': ['You have successfully registered for this event!'], 'anchor': 'register'})
+
+    return render(request, 'events/deregistration_confirmation.html', {'event': event})
 
 @login_required
 def event_register(request, event_id):
@@ -214,12 +234,20 @@ def release_payment(request, event_id):
     if not request.user == event.creator:
         raise PermissionDenied
 
+    if not event.status == -1:
+        return specific_event(request, event_id, {'event_errors': ['Event Results are not in yet or status has not been updated, double check or contact us.'], 'anchor': 'register'})
+
+    if event.payment_released:
+        return specific_event(request, event_id, {'event_errors': ['Event Payment has already been released, if there is a problem contact us.'], 'anchor': 'register'})
+    
     calculate_function = prize_calc_functions[mode.result_handler]
 
     payment = calculate_function(event, commit=False)
 
     if request.method == 'POST':
         calculate_function(event, commit=True)
+        event.payment_released = True
+        event.save()
         return redirect('events')
 
     return render(request, 'events/confirm_release_pay.html', {'payment': payment})

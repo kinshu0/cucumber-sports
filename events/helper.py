@@ -12,7 +12,9 @@ from datetime import timedelta
 
 from django.db.models.expressions import RawSQL
 
-
+'''
+Function to save results of any timed event competition (running, swimming, etc.)
+'''
 def timed_event(form_data, event, profile):
     try:
         converted_form_data = json.loads(form_data)
@@ -72,12 +74,14 @@ place_prize_settings = {
     'first_share': Decimal('0.5'),
     'second_share':  Decimal('0.3'),
     'third_share':  Decimal('0.2'),
+    'sponsored_prize_rake': Decimal('0.0'),
 }
 
 
 def place_prize_display(event):
     number_of_registrations = Registration.objects.filter(event=event).count()
     registration_fee = event.registration_fee
+
 
     total_prize = number_of_registrations * registration_fee
 
@@ -92,6 +96,15 @@ def place_prize_display(event):
     third_prize = place_prize_settings['third_share'] * awardable_prize
 
     my_fee = total_prize - first_prize - second_prize - third_prize
+
+    
+    if event.sponsored_prize > Decimal('0.0'):
+        awardable_sponsored_prize = event.sponsored_prize * (Decimal('1.00') - place_prize_settings['percent_fee'])
+        my_fee += event.sponsored_prize * place_prize_settings['percent_fee']
+
+        first_prize += place_prize_settings['first_share'] * awardable_sponsored_prize
+        second_prize += place_prize_settings['second_share'] * awardable_sponsored_prize
+        third_prize += place_prize_settings['third_share'] * awardable_sponsored_prize      
 
     prize_template = get_template('events/subtemplates/place_prize.html')
     prize_template_context = {

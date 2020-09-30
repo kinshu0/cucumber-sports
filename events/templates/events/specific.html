@@ -138,7 +138,11 @@
 
         <div id="register" class="d-flex justify-content-around mb-5 row w-100">
         {% if event.status == 1 %}
+        {% if not registered %}
             <a type="button" href="{% url 'specific-event-register' event.id %}" class="btn btn-dark col-8 col-md-4">REGISTER</a>
+        {% else %}
+            <a type="button" href="{% url 'specific-event-deregister' event.id %}" class="btn btn-danger col-8 col-md-4">CANCEL REGISTRATION</a>
+        {% endif %}
         {% elif event.status == -1 %}
             <a type="button" href="{% url 'specific-event-result' event.id %}" class="btn btn-info col-8 col-md-4">RESULTS</a>
         {% endif %}

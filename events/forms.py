@@ -17,10 +17,11 @@ class EventCreation(forms.ModelForm):
         model = models.Event
 
         sport_mode = forms.ModelChoiceField(SportMode.objects)
+        # sponsored_prize = forms.DecimalField(help_text='Enter value here if outside source is providing portion of prize money')
 
         fields = [
             'name', 'event_picture', 'description_picture_1', 'description_picture_2', 'description_picture_3',
-            'description', 'when', 'max_registrations', 'registration_fee', 'sport_mode', 'location_name', 'address_1',
+            'description', 'when', 'max_registrations', 'registration_fee', 'sponsored_prize', 'sport_mode', 'location_name', 'address_1',
             'address_2', 'city', 'state', 'zip_code'
         ]
         widgets = {
@@ -29,6 +30,9 @@ class EventCreation(forms.ModelForm):
                 'type': 'datetime-local',
                 
             })
+        }
+        help_texts = {
+            'sponsored_prize': 'Enter value here if outside source is providing portion of prize money'
         }
         
     def clean_when(self):

@@ -28,6 +28,12 @@ def home(request):
         return redirect('profile_view')
     return render(request, 'index.html')
 
+def terms(request):
+    return render(request, 'terms.html')
+def privacy(request):
+    return render(request, 'privacy.html')
+def about(request):
+    return render(request, 'about.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +41,11 @@ urlpatterns = [
     path('', home, name='home'),
     path('events/', include('events.urls')),
     path('accounts/', include('accounts.urls')),
+
+    path('legal/terms', terms, name='terms'),
+    path('legal/privacy', privacy, name='privacy'),
+
+    path('about/', about, name='about'),
 ]
 
 if settings.DEBUG:

@@ -99,7 +99,7 @@ def activate_account(request, activation_key):
     r.email_validated = True
     r.save()
 
-    return render(request, 'activated.html')
+    return render(request, 'accounts/login.html', {'event_messages': ['Account Activation Successful!']})
 
 
 '''
