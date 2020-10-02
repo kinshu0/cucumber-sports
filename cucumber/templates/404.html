@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block body_class %}template-404{% endblock %}
 
 {% block content %}
-    <h1>Page not found</h1>
-
-    <h2>Sorry, this page could not be found.</h2>
+<div class="container">
+    <div>
+        <h1>Page not found, bruhhh...</h1>
+        <h3>Maybe go back to the <a href="{% url 'home' %}">home page</a> and find your way again.</h3>
+    </div>
+</div>
 {% endblock %}

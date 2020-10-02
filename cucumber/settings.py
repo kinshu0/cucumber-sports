@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'r6*8fuxqn2&xwy&etwingdqt=^zk_!n4hb_dlwnts^_#_w=6k3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django_jsonforms',
     'crispy_forms',
-    # 'tempus_dominus',
     'accounts',
     'events',
     'django.contrib.admin',
@@ -92,16 +91,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-'''
-sqlite current DB
-'''
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -155,3 +144,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+ADMINS = [('Kinshu', 'kinshugupta2002@gmail.com')]
