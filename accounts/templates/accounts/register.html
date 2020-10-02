@@ -24,7 +24,9 @@
                     {% for message in messages %}
                         <div class="row">{{ message }}</div>
                     {% endfor %}
+                    {% comment %}
                     <div class="row"><label for="resend">Did not get an email?</label><a id="resend" class="btn btn-info">Resend Verification email</a></div>
+                    {% endcomment %}
                 {% endif %}
             </form>
         </div>

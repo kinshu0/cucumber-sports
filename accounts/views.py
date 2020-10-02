@@ -14,7 +14,7 @@ from django.shortcuts import redirect, get_object_or_404, reverse, Http404, rend
 from .models import Profile, Registration
 from .forms import EditProfileForm
 
-from django.template.loader import get_template
+from django.template.loader import get_template, render_to_string
 
 
 from django.contrib.auth import authenticate, login
@@ -41,19 +41,18 @@ def register(request):
             subject = "Cucumber Sports Account Verification"    
             verification_link = f'{request.scheme}://{request.get_host()}/activate/{activation_key}'
 
-            message = (
+            plain_email = (
                 f'Hello {request.POST["first_name"]},\nPlease visit the following link to verify your account:\n'
                 f'{verification_link}'
             )
+
+            html_email = render_to_string('accounts/verification_email.html', {'verification_link': verification_link})
             
-            # message = get_template('verification_email.html').render({
-            #     'verification_link': verification_link
-            # })
 
             error = False
 
             try:
-                send_mail(subject, message, settings.SERVER_EMAIL, [request.POST['email']])
+                send_mail(subject, plain_email, settings.SERVER_EMAIL, f.cleaned_data['email'], fail_silently=False, html_message=html_email)
                 messages.add_message(request, messages.INFO, 'Account created! Click on the link sent to your email to activate the account')
 
             except:

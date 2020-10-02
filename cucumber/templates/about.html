@@ -184,6 +184,7 @@ About {{ block.super }}
     <section class="bg-light">
         <div class="container">
             <h2 class="display-4 mb-5 text-center">The Team</h2>
+            {% comment %}
             <div class="d-flex flex-row flex-wrap justify-content-center p-1 w-100">
                 <div class="card col-12 col-lg-6 col-md-8 col-sm-12 m-2">
                     <img src="{% static 'assets/img/rect.JPG' %}" class="card-img-top">
@@ -196,6 +197,7 @@ About {{ block.super }}
                     </div>
                 </div>
             </div>
+            {% endcomment %}
         </div>
     </section>
     <div id="contact" class="jumbotron">

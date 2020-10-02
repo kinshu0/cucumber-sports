@@ -12,6 +12,7 @@
 {% block content %}
 <div class="mt-1">
     <div class="col-12 container d-flex justify-content-end" style="font-size: 1.8rem; position: absolute; ">
+        <a href="{% url 'logout' %}"><i class='bx bx-log-out' style="color: white;"></i></a>
         <a href="{% url 'edit_profile' %}"><i class='bx bxs-edit' style="color: white;"></i></a>
     </div>
     {% include 'accounts/subtemplates/account_card.html' %}
