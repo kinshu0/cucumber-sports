@@ -24,7 +24,7 @@ SECRET_KEY = 'r6*8fuxqn2&xwy&etwingdqt=^zk_!n4hb_dlwnts^_#_w=6k3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'cucumbersports.appspot.com', 'cucumbersports.com']
 

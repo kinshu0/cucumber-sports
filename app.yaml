@@ -1,6 +1,6 @@
 runtime: python
 env: flex
-entrypoint: gunicorn -b :$PORT mysite.wsgi
+entrypoint: gunicorn -b :$PORT cucumber.wsgi
 
 beta_settings:
     cloud_sql_instances: cucumbersports:us-east4:cucumbersports-db
