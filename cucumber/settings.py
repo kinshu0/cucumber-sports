@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'r6*8fuxqn2&xwy&etwingdqt=^zk_!n4hb_dlwnts^_#_w=6k3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'cucumbersports.appspot.com', 'cucumbersports.com']
 
 
 # Application definition
@@ -84,14 +85,17 @@ WSGI_APPLICATION = 'cucumber.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cucumber-dev',
+        'NAME': 'cucumber-db-0',
         'USER': 'postgres',
-        'PASSWORD': 'a1b1c1d1',
-        'HOST': '127.0.0.1',
+        'PASSWORD': '8M60u8iBLEcB9owF',
         'PORT': '5432',
     }
 }
-
+DATABASES['default']['HOST'] = '/cloudsql/cucumbersports:us-east4:cucumbersports-db'
+if os.getenv('GAE_INSTANCE'):
+    pass
+else:
+    DATABASES['default']['HOST'] = '127.0.0.1'
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -128,7 +132,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'https://storage.googleapis.com/cucumbersports-static/static/'
 
 
 STATIC_ROOT = BASE_DIR / 'staticdeploy'
@@ -146,3 +150,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 ADMINS = [('Kinshu', 'kinshugupta2002@gmail.com')]
+
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
