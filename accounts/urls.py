@@ -9,7 +9,7 @@ def logout_view(request):
 
 urlpatterns = [
     path('register/', views.register, name='register'),
-    path('activate/<slug:activation_key>/', views.activate_account),
+    path('activate/<str:activation_key>/', views.activate_account),
     
     path('login/', views.login_view, name='login'),
     path('logout/', logout_view, name='logout'),

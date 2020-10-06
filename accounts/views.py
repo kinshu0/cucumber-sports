@@ -39,7 +39,7 @@ def register(request):
             activation_key = helpers.generate_activation_key(username=request.POST['username'])
 
             subject = "Cucumber Sports Account Verification"    
-            verification_link = f'{request.scheme}://{request.get_host()}/activate/{activation_key}'
+            verification_link = f'{request.scheme}://{request.get_host()}/accounts/activate/{activation_key}/'
 
             plain_email = (
                 f'Hello {request.POST["first_name"]},\nPlease visit the following link to verify your account:\n'
@@ -52,7 +52,7 @@ def register(request):
             error = False
 
             try:
-                send_mail(subject, plain_email, settings.SERVER_EMAIL, f.cleaned_data['email'], fail_silently=False, html_message=html_email)
+                send_mail(subject, plain_email, '"Cucumber Sports" <verification@cucumbersports.com>', [f.cleaned_data['email']], fail_silently=False, html_message=html_email)
                 messages.add_message(request, messages.INFO, 'Account created! Click on the link sent to your email to activate the account')
 
             except:

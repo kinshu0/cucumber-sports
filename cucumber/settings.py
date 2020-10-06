@@ -136,12 +136,15 @@ USE_TZ = True
 
 # STATIC_ROOT = BASE_DIR / 'staticdeploy'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'kinshualternate@gmail.com'
-EMAIL_HOST_PASSWORD = 'test@*K9unit'
+
+EMAIL_BACKEND = 'django_ses.SESBackend'
+
+AWS_ACCESS_KEY_ID = 'AKIAR6WCOMII5WM3KHSY'
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_SES_REGION_NAME = 'us-east-2'
+AWS_SES_REGION_ENDPOINT = 'email.us-east-2.amazonaws.com'
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -160,6 +163,7 @@ SECURE_HSTS_PRELOAD = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+SERVER_EMAIL = 'server@cucumbersports.com'
 
 '''
 Upload to gcp bucket
