@@ -42,7 +42,7 @@ def specific_event(request, event_id, optional_context=None):
         'prize_section_template': prize_section,
     }
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if Registration.objects.filter(profile=request.user.profile, event=sp_event).exists():
             context.update({'registered': True})
 
