@@ -78,7 +78,9 @@
             </div>
         </section>
 
-        {{ prize_section_template }}
+        {% if event.publicly_visible_prize %}
+            {{ prize_section_template }}
+        {% endif %}
 <!-- 
         <section id="money" class="about p-4">
             <div class="container p-3" data-aos="fade-up">
