@@ -46,7 +46,7 @@ def register(request):
                 f'{verification_link}'
             )
 
-            html_email = render_to_string('accounts/verification_email.html', {'verification_link': verification_link})
+            html_email = render_to_string('accounts/ver_email_lite.html', {'verification_link': verification_link})
             
 
             error = False

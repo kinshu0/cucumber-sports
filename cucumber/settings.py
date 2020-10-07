@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django_jsonforms',
     'crispy_forms',
-    # 'tempus_dominus',
     'accounts',
     'events',
     'django.contrib.admin',
@@ -43,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,8 +63,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             'cucumber/templates',
-            # 'accounts/templates/accounts',
-            # 'events/templates/events'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -92,8 +92,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 '''
-sqlite current DB
+sqlite DB configuration
 '''
 # DATABASES = {
 #     'default': {
@@ -101,6 +102,20 @@ sqlite current DB
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+'''
+Production DB configuration
+'''
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'cucumber-db-0',
+#         'USER': 'postgres',
+#         'PASSWORD': '8M60u8iBLEcB9owF',
+#         'PORT': '5432',
+#         'HOST': '/cloudsql/cucumbersports:us-east4:cucumbersports-db',
+#     }
+# }
+
 
 
 # Password validation
@@ -138,20 +153,40 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+'''
+Local Static files configuration
+'''
 STATIC_URL = '/static/'
-
-
 STATIC_ROOT = BASE_DIR / 'staticdeploy'
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'kinshualternate@gmail.com'
-EMAIL_HOST_PASSWORD = 'test@*K9unit'
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+'''
+GCP Bucket Definitions to serve and upload static files in production
+'''
+# STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# GS_BUCKET_NAME = 'cucumbersports-media'
+# GS_FILE_OVERWRITE = False
+
+
+'''
+Test email backend
+'''
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'kinshualternate@gmail.com'
+# EMAIL_HOST_PASSWORD = 'test@*K9unit'
+
+'''
+AWS SES Production email backend
+'''
+EMAIL_BACKEND = 'django_ses.SESBackend'
+
+AWS_ACCESS_KEY_ID = 'AKIAR6WCOMII5WM3KHSY'
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_SES_REGION_NAME = 'us-east-2'
+AWS_SES_REGION_ENDPOINT = 'email.us-east-2.amazonaws.com'
