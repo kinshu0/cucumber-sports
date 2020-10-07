@@ -20,6 +20,16 @@ Login - {{ block.super }}
                 <input type="hidden" name="next" value="{{ request.GET.next }}" />
             </fieldset>
             <br>
+            {% if error_messages %}
+                {% for message in error_messages %}
+                    <div class="row w-100 text-danger mb-3 ml-1">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% if success_messages %}
+                {% for message in success_messages %}
+                    <div class="row w-100 text-success mb-3 ml-1">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <div class="form-group">
                 <button class="btn btn-primary font-weight-thin" type="submit">Login</button>
             </div>
@@ -29,11 +39,6 @@ Login - {{ block.super }}
             Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
         </div>
 
-        {% if event_messages %}
-        {% for message in event_messages %}
-            <div class="row w-100 justify-content-center text-success">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
     </div>
 
 </section>

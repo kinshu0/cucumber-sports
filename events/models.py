@@ -40,6 +40,8 @@ class Event(models.Model):
     sport_mode = models.ForeignKey(SportMode, on_delete=models.DO_NOTHING)
     registration_fee = models.DecimalField(decimal_places=2, max_digits=6, default=Decimal('0.00'))
 
+    publicly_visible_prize = models.BooleanField(default=True)
+
     class Status(models.IntegerChoices):
         OPEN = 1
         IN_PROGRESS = 0

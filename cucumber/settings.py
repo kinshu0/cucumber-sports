@@ -16,9 +16,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'r6*8fuxqn2&xwy&etwingdqt=^zk_!n4hb_dlwnts^_#_w=6k3'
 
@@ -42,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,15 +85,10 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': '8M60u8iBLEcB9owF',
         'PORT': '5432',
+        'HOST': '/cloudsql/cucumbersports:us-east4:cucumbersports-db',
     }
 }
-DATABASES['default']['HOST'] = '/cloudsql/cucumbersports:us-east4:cucumbersports-db'
-if os.getenv('GAE_INSTANCE'):
-    pass
-else:
-    DATABASES['default']['HOST'] = '127.0.0.1'
-    DATABASES['default']['NAME'] = 'cucumber-dev'
-    DATABASES['default']['PASSWORD'] = 'a1b1c1d1'
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -128,14 +122,11 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
-# STATIC_URL = 'https://storage.googleapis.com/cucumbersports-static/static/'
 
 
-# STATIC_ROOT = BASE_DIR / 'staticdeploy'
-
+'''
+AWS SES Production email backend
+'''
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 
@@ -145,13 +136,13 @@ AWS_SECRET_ACCESS_KEY = 'NO/a27mIOIbVctzVoTdxccbxlLNN/AhcZUhaFkU2'
 AWS_SES_REGION_NAME = 'us-east-2'
 AWS_SES_REGION_ENDPOINT = 'email.us-east-2.amazonaws.com'
 
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# MEDIA_ROOT = BASE_DIR / 'media'
-# MEDIA_URL = '/media/'
-
 ADMINS = [('Kinshu', 'kinshugupta2002@gmail.com')]
+SERVER_EMAIL = 'server@cucumbersports.com'
+
+
+'''
+HTTPS Secure Settings Configuration
+'''
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
@@ -163,32 +154,10 @@ SECURE_HSTS_PRELOAD = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-SERVER_EMAIL = 'server@cucumbersports.com'
 
 '''
-Upload to gcp bucket
+GCP Bucket Definitions to server and upload static files
 '''
-
-# PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
-
-
-# DEFAULT_FILE_STORAGE = 'gcloud.GoogleCloudMediaFileStorage'
-# STATICFILES_STORAGE = 'gcloud.GoogleCloudStaticFileStorage'
-
-# GS_PROJECT_ID = 'cucumbersports'
-# GS_STATIC_BUCKET_NAME = 'cucumbersports-static'
-# GS_MEDIA_BUCKET_NAME = 'cucumbersports-media'  # same as STATIC BUCKET if using single bucket both for static and media
-
-# STATIC_URL = 'https://storage.googleapis.com/{}/static/'.format(GS_STATIC_BUCKET_NAME)
-# STATIC_ROOT = "static/"
-# MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_MEDIA_BUCKET_NAME)
-# MEDIA_ROOT = "media/"
-
-# UPLOAD_ROOT = 'media/'
-
-# DOWNLOAD_ROOT = os.path.join(PROJECT_ROOT, "static/media/downloads")
-# DOWNLOAD_URL = STATIC_URL + "media/downloads"
-
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'cucumbersports-media'

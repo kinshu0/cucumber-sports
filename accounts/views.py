@@ -123,7 +123,7 @@ def login_view(request):
 
             # return redirect(request.POST.get('next', '/accounts/profile'))
         else:
-            return render(request, 'accounts/login.html', {'message': 'Invalid Login'})
+            return render(request, 'accounts/login.html', {'error_messages': ['Invalid Login']})
 
     else:
         return render(request, 'accounts/login.html')
