@@ -41,12 +41,14 @@ def register(request):
             subject = "Cucumber Sports Account Verification"    
             verification_link = f'{request.scheme}://{request.get_host()}/accounts/activate/{activation_key}/'
 
+            unsubscribe_link = f'{request.scheme}://{request.get_host()}/accounts/email/unsubscribe/{activation_key}/'
+
             plain_email = (
                 f'Hello {request.POST["first_name"]},\nPlease visit the following link to verify your account:\n'
                 f'{verification_link}'
             )
 
-            html_email = render_to_string('accounts/ver_email_lite.html', {'verification_link': verification_link})
+            html_email = render_to_string('accounts/ver_email_lite.html', {'verification_link': verification_link, 'unsubscribe_link': unsubscribe_link})
             
 
             error = False
@@ -98,7 +100,7 @@ def activate_account(request, activation_key):
     r.email_validated = True
     r.save()
 
-    return render(request, 'accounts/login.html', {'event_messages': ['Account Activation Successful!']})
+    return render(request, 'accounts/login.html', {'success_messages': ['Account Activation Successful!']})
 
 
 '''
