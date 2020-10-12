@@ -43,7 +43,7 @@
         </div>
         {% endcomment %}
     </div>
-    <div class="d-flex flex-row flex-wrap justify-content-center p-1 w-100">
+    <div class="d-flex flex-row flex-wrap justify-content-center p-1 w-100 mb-5">
         {% for event in upcoming_events %}
             {% if event.status == 1 %}
                 {% include 'events/subtemplates/event_card.html' %}
