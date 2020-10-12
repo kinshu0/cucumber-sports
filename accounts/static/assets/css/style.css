@@ -1756,3 +1756,10 @@ section {
 .pink-brand-button:hover {
     background-color: #d20054;
 }
+
+
+/* Inner page custom padding */
+
+.inner-page {
+    padding: 60px 0 0;
+}
