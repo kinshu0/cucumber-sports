@@ -10,6 +10,14 @@
     <section>
         <div class="container">
             <h2>Create account</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row"><h5 class="text-center">{{ message }}</h5></div>
+                {% endfor %}
+                {% comment %}
+                <div class="row"><label for="resend">Did not get an email?</label><a id="resend" class="btn btn-info">Resend Verification email</a></div>
+                {% endcomment %}
+            {% endif %}
             <form method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
@@ -20,14 +28,6 @@
                 <div class="text-muted text-center">
                     <small>By Signing up for Cucumber Sports, you agree to the <a href="{% url 'terms' %}">Terms of Service</a>. View our <a href="{% url 'privacy' %}">Privacy Policy</a></small>
                 </div>
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="row">{{ message }}</div>
-                    {% endfor %}
-                    {% comment %}
-                    <div class="row"><label for="resend">Did not get an email?</label><a id="resend" class="btn btn-info">Resend Verification email</a></div>
-                    {% endcomment %}
-                {% endif %}
             </form>
         </div>
 
