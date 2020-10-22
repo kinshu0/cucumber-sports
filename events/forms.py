@@ -21,7 +21,7 @@ class EventCreation(forms.ModelForm):
 
         fields = [
             'name', 'event_picture', 'description_picture_1', 'description_picture_2', 'description_picture_3',
-            'description', 'when', 'max_registrations', 'registration_fee', 'sponsored_prize', 'publicly_visible_prize', 'sport_mode', 'location_name', 'address_1',
+            'description', 'when', 'max_registrations', 'participants_public', 'registration_fee', 'sponsored_prize', 'publicly_visible_prize', 'sport_mode', 'location_name', 'address_1',
             'address_2', 'city', 'state', 'zip_code'
         ]
         widgets = {
@@ -32,7 +32,8 @@ class EventCreation(forms.ModelForm):
             })
         }
         help_texts = {
-            'sponsored_prize': 'Enter value here if outside source is providing portion of prize money'
+            'sponsored_prize': 'Enter value here if outside source is providing portion of prize money',
+            'participants_public': 'Check if event registrants are publicly visible'
         }
         
     def clean_when(self):

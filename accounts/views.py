@@ -96,6 +96,10 @@ def activate_account(request, activation_key):
 
     r = get_object_or_404(Profile, activation_key=activation_key, email_validated=False)
     r.user.is_active = True
+    '''
+    TEMPORARY HOTFIX
+    '''
+    r.user.has_perm('events.add_event')
     r.user.save()
     r.email_validated = True
     r.save()

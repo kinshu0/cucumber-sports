@@ -48,8 +48,8 @@ def specific_event(request, event_id, optional_context=None):
 
     if optional_context:
         context.update(optional_context)
-    # if sp_event.participants_public:
-    #     context.update({'registrations': get_list_or_404(Registration, event=sp_event)})
+    if sp_event.participants_public:
+        context.update({'registrations': Registration.objects.filter(event=sp_event)})
 
     return render(request, 'events/specific.html', context=context)
 
